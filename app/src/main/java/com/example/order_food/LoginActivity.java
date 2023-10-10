@@ -63,8 +63,14 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("email",email);
                     editor.putString("password",password);
                     editor.commit();
-                    Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
-                    startActivity(intent);
+                    if(email.contains("admin")){
+                        Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
