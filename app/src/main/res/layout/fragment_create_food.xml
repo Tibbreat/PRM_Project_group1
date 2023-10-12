@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".adminFragment.CreateFoodFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Add Food"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/buttonBackToFoodManagement"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="Back to Food Management"
+        android:src="@drawable/previous"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/textView14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        tools:layout_editor_absoluteX="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp" >
+
+            <EditText
+                android:id="@+id/edit_food_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Food name"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:layout_marginBottom="16dp"/>
+
+            <EditText
+                android:id="@+id/edit_food_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Food price"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="16dp"/>
+
+            <EditText
+                android:id="@+id/edit_food_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Short description"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="16dp"/>
+
+            <EditText
+                android:id="@+id/edit_food_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ingredients"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="16dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_choose_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/greenbuttongradient"
+                android:text="Choose Image"
+                android:onClick="openImagePicker"
+                android:textColor="@color/white"
+                android:layout_marginBottom="16dp"
+                />
+
+            <ImageView
+                android:id="@+id/imageViewFood"
+                android:layout_width="wrap_content"
+                android:layout_height="271dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/default_placeholder" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_add_food"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/greenbuttongradient"
+                android:text="Add food"
+                android:textColor="@color/white"
+                android:layout_marginBottom="16dp"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

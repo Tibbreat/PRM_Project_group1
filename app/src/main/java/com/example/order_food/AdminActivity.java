@@ -34,7 +34,7 @@ public class AdminActivity extends AppCompatActivity {
 
         dashboard = DashboardFragment.newInstance(null,null);
         accountManagement = AccountManagementFragment.newInstance(null,null);
-        foodManagement = FoodManagementFragment.newInstance(null,null);
+        foodManagement = FoodManagementFragment.newInstance();
         orderManagement = OrderManagementFragment.newInstance(null,null);
         profile = ProfileFragment.newInstance();
 

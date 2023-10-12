@@ -2,24 +2,30 @@ package com.example.order_food.adminFragment;
 
 import android.os.Bundle;
 
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.example.order_food.R;
 
-public class FoodManagementFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link ViewListFoodsFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class ViewListFoodsFragment extends Fragment {
 
-    public FoodManagementFragment() {
+    public ViewListFoodsFragment() {
         // Required empty public constructor
     }
 
-    public static FoodManagementFragment newInstance() {
-        FoodManagementFragment fragment = new FoodManagementFragment();
+    public static ViewListFoodsFragment newInstance() {
+        ViewListFoodsFragment fragment = new ViewListFoodsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -33,23 +39,15 @@ public class FoodManagementFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_food_management, container, false);
 
-        AppCompatButton buttonCreate = view.findViewById(R.id.button_create);
-        AppCompatButton buttonView = view.findViewById(R.id.button_view);
+        View view = inflater.inflate(R.layout.fragment_view_list_foods, container, false);
 
-        buttonCreate.setOnClickListener(new View.OnClickListener() {
+        ImageButton buttonBackToFoodManagement = view.findViewById(R.id.buttonBackToFoodManagement);
+
+        buttonBackToFoodManagement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Replace the current fragment with CreateFoodFragment
-                replaceFragment(new CreateFoodFragment());
-            }
-        });
-
-        buttonView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceFragment(new ViewListFoodsFragment());
+                replaceFragment(new FoodManagementFragment());
             }
         });
 
@@ -61,4 +59,5 @@ public class FoodManagementFragment extends Fragment {
         transaction.replace(R.id.fragmentContainerView2, fragment);
         transaction.commit();
     }
+
 }
