@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.order_food.R;
+import com.example.order_food.adapter.FoodListAdapter;
+import com.example.order_food.db.entity.Food;
+import com.example.order_food.service.FoodService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +27,7 @@ import com.example.order_food.R;
  * create an instance of this fragment.
  */
 public class ViewListFoodsFragment extends Fragment {
+    private ImageButton btnBack;
 
     public ViewListFoodsFragment() {
         // Required empty public constructor
@@ -36,20 +45,23 @@ public class ViewListFoodsFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    private void initUI(View view) {
+        btnBack = view.findViewById(R.id.buttonBackToFoodManagement);
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_list_foods, container, false);
+        initUI(view);
+        btnBack.setOnClickListener(v -> replaceFragment(new FoodManagementFragment()));
 
-        ImageButton buttonBackToFoodManagement = view.findViewById(R.id.buttonBackToFoodManagement);
+        RecyclerView recyclerView = view.findViewById(R.id.view_list_food_manage);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+        recyclerView.setLayoutManager(layoutManager);
 
-        buttonBackToFoodManagement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceFragment(new FoodManagementFragment());
-            }
-        });
+        FoodListAdapter adapter = new FoodListAdapter(requireContext(), getAllFoods());
+        recyclerView.setAdapter(adapter);
+
 
         return view;
     }
@@ -60,4 +72,9 @@ public class ViewListFoodsFragment extends Fragment {
         transaction.commit();
     }
 
+    private List<Food> getAllFoods() {
+        // Retrieve all food items from the database using FoodService
+        // You may want to run this on a background thread or use LiveData for better performance
+        return FoodService.getInstance(requireContext()).getAllFoodItems();
+    }
 }

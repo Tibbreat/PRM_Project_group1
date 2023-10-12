@@ -1,9 +1,9 @@
 package com.example.order_food.adminFragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,58 +11,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.order_food.R;
+import com.example.order_food.db.entity.Food;
+import com.example.order_food.service.FoodService;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 public class CreateFoodFragment extends Fragment {
-
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageView imageViewFood;
-    private Button btnChooseImage;
-    private EditText editFoodName, editFoodPrice, editFoodDescription, editFoodIngredients;
-
+    private Button btnChooseImage, btnAddFood;
+    private ImageButton btnBack;
+    private EditText editFoodName, editFoodPrice, editFoodQuantity, editFoodDescription, editFoodIngredients;
     private Uri selectedImageUri;
 
     public CreateFoodFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_food, container, false);
-
-        initUI(view);
-
-        // Handle the "Choose Image" button click
-        btnChooseImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImagePicker();
-            }
-        });
-
-        Button btnAddFood = view.findViewById(R.id.btn_add_food);
-        btnAddFood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logFoodInformation();
-            }
-        });
-
-        // Handle other actions such as adding food to your app
-
-        ImageButton buttonBackToFoodManagement = view.findViewById(R.id.buttonBackToFoodManagement);
-
-        buttonBackToFoodManagement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                replaceFragment(new FoodManagementFragment());
-            }
-        });
-
-
-        return view;
     }
 
     private void initUI(View view) {
@@ -70,11 +37,25 @@ public class CreateFoodFragment extends Fragment {
         btnChooseImage = view.findViewById(R.id.btn_choose_image);
         editFoodName = view.findViewById(R.id.edit_food_name);
         editFoodPrice = view.findViewById(R.id.edit_food_price);
+        editFoodQuantity = view.findViewById(R.id.edit_food_quantity);
         editFoodDescription = view.findViewById(R.id.edit_food_description);
         editFoodIngredients = view.findViewById(R.id.edit_food_ingredients);
+        btnAddFood = view.findViewById(R.id.btn_add_food);
+        btnBack = view.findViewById(R.id.buttonBackToFoodManagement);
     }
 
-    // Handle image selection by opening an image picker
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_create_food, container, false);
+        initUI(view);
+
+        btnChooseImage.setOnClickListener(v -> openImagePicker());
+        btnAddFood.setOnClickListener(v -> insert());
+        btnBack.setOnClickListener(v -> replaceFragment(new FoodManagementFragment()));
+
+        return view;
+    }
+
     private void openImagePicker() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -87,14 +68,10 @@ public class CreateFoodFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
-            // Get the selected image's URI and store it in the class-level variable
             selectedImageUri = data.getData();
-            // Set the selected image to the ImageView
             imageViewFood.setImageURI(selectedImageUri);
         }
     }
-
-    // Add methods to handle adding food to your app
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -102,22 +79,102 @@ public class CreateFoodFragment extends Fragment {
         transaction.commit();
     }
 
-    private void logFoodInformation() {
-        String foodName = editFoodName.getText().toString();
-        String foodPrice = editFoodPrice.getText().toString();
-        String foodDescription = editFoodDescription.getText().toString();
-        String foodIngredients = editFoodIngredients.getText().toString();
+    private void insert() {
+        String foodName = editFoodName.getText().toString().trim();
+        String foodPrice = editFoodPrice.getText().toString().trim();
+        String foodQuantity = editFoodQuantity.getText().toString().trim();
+        String foodDescription = editFoodDescription.getText().toString().trim();
+        String foodIngredients = editFoodIngredients.getText().toString().trim();
 
-        // Log the image URI along with other information
-        if (selectedImageUri != null) {
-            Log.d("FoodInfo", "Image URI: " + selectedImageUri.toString());
+        if (validateInput(foodName, foodPrice, foodQuantity, foodDescription, foodIngredients)) {
+            // Save the image to app's internal storage
+            String imageFileName = saveImageToInternalStorage(selectedImageUri);
+
+            if (imageFileName != null) {
+                Food food = new Food(foodName, foodPrice, foodQuantity, foodDescription, foodIngredients, imageFileName);
+                FoodService foodService = FoodService.getInstance(requireContext());
+                boolean insertionResult = foodService.insert(food);
+
+                if (insertionResult) {
+                    clearFields();
+                    Toast.makeText(requireContext(), "Food item added successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Failed to add food item", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(requireContext(), "Failed to save the image", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private String saveImageToInternalStorage(Uri selectedImageUri) {
+        try {
+            // Generate a unique file name for the image
+            String imageFileName = "food_" + System.currentTimeMillis() + ".png";
+
+            // Open an input stream from the selected image URI
+            InputStream inputStream = requireContext().getContentResolver().openInputStream(selectedImageUri);
+
+            // Create an output stream to the app's internal storage
+            FileOutputStream outputStream = requireContext().openFileOutput(imageFileName, Context.MODE_PRIVATE);
+
+            // Copy the image from the input stream to the output stream
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            // Close the streams
+            inputStream.close();
+            outputStream.close();
+
+            // Return the file path to the saved image
+            return imageFileName;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    private boolean validateInput(String foodName, String foodPrice, String foodQuantity, String foodDescription, String foodIngredients) {
+        if (foodName.isEmpty() || foodPrice.isEmpty() || foodQuantity.isEmpty() || foodDescription.isEmpty() || foodIngredients.isEmpty()) {
+            showToast("All fields are required");
+            return false;
+        }
+        try {
+            double price = Double.parseDouble(foodPrice);
+            int quantity = Integer.parseInt(foodQuantity);
+
+            if (price <= 0 || quantity <= 0) {
+                showToast("Price and quantity must be positive");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            showToast("Invalid price or quantity format");
+            return false;
         }
 
-        Log.d("FoodInfo", "Food Name: " + foodName);
-        Log.d("FoodInfo", "Food Price: " + foodPrice);
-        Log.d("FoodInfo", "Food Description: " + foodDescription);
-        Log.d("FoodInfo", "Food Ingredients: " + foodIngredients);
+        if (selectedImageUri == null) {
+            showToast("Choose an image");
+            return false;
+        }
 
-        // You can add more code here to save the food information to your app's database or perform other actions.
+        return true;
+    }
+
+    private void clearFields() {
+        editFoodName.setText("");
+        editFoodPrice.setText("");
+        editFoodQuantity.setText("");
+        editFoodDescription.setText("");
+        editFoodIngredients.setText("");
+        imageViewFood.setImageResource(R.drawable.placeholder);
+        selectedImageUri = null;
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
