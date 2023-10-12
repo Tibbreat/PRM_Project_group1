@@ -43,7 +43,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularH
         return popularFoods.size();
     }
 
-    public class PopularHolder extends RecyclerView.ViewHolder {
+    public static class PopularHolder extends RecyclerView.ViewHolder {
 
         ImageView food_p_view;
         TextView food_p_name;
