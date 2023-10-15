@@ -2,14 +2,20 @@ package com.example.order_food.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -121,6 +127,25 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        recView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                if (e.getAction() == MotionEvent.ACTION_UP) {
+                    // Thực hiện điều hướng sang FoodDetailFragment khi một mục được chạm vào
+                    FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance();
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+                    return true; // Đánh dấu rằng sự kiện đã được xử lý
+                }
+                return false;
+            }
+        });
+
+
         return view;
     }
+
 }
