@@ -63,7 +63,6 @@
         android:id="@+id/button2"
         android:layout_width="167dp"
         android:layout_height="51dp"
-        android:layout_marginStart="207dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/startColor"
         android:drawableLeft="@android:drawable/ic_menu_add"
@@ -71,6 +70,7 @@
         android:drawableTint="#77140D"
         android:text="Add to cart"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
