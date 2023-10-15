@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <EditText
-        android:id="@+id/edt_email6"
+        android:id="@+id/edt_regis_phone"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="32dp"
@@ -33,10 +33,10 @@
         android:hint="Phone number"
         android:inputType="number"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email2"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_name"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_email2"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email2" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_name"
+        app:layout_constraintTop_toBottomOf="@+id/edt_regis_name" />
 
     <TextView
         android:id="@+id/err_regis_phone"
@@ -46,13 +46,13 @@
         android:text="Invalid account"
         android:textColor="@color/textError"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edt_email6"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email6"
+        app:layout_constraintBottom_toTopOf="@+id/edt_regis_phone"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_phone"
         app:layout_constraintHorizontal_bias="0.026"
-        app:layout_constraintStart_toStartOf="@+id/edt_email6" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_phone" />
 
     <EditText
-        android:id="@+id/edt_email4"
+        android:id="@+id/edt_regis_re_password"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="32dp"
@@ -64,10 +64,10 @@
         android:hint="Enter password again"
         android:inputType="text|textPassword"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_password"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_password"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_password"
-        app:layout_constraintTop_toBottomOf="@+id/edt_password" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_password"
+        app:layout_constraintTop_toBottomOf="@+id/edt_regis_password" />
 
     <TextView
         android:id="@+id/err_regis_re_password"
@@ -77,10 +77,10 @@
         android:text="TextView"
         android:textColor="@color/textError"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edt_email4"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email4"
+        app:layout_constraintBottom_toTopOf="@+id/edt_regis_re_password"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_re_password"
         app:layout_constraintHorizontal_bias="0.022"
-        app:layout_constraintStart_toStartOf="@+id/edt_email4" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_re_password" />
 
     <TextView
         android:id="@+id/err_email4"
@@ -90,13 +90,13 @@
         android:text="Invalid account"
         android:textColor="@color/textError"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edt_email"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email"
+        app:layout_constraintBottom_toTopOf="@+id/edt_regis_email"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_email"
         app:layout_constraintHorizontal_bias="0.034"
-        app:layout_constraintStart_toStartOf="@+id/edt_email" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_email" />
 
     <EditText
-        android:id="@+id/edt_email3"
+        android:id="@+id/edt_regis_address"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="36dp"
@@ -107,10 +107,10 @@
         android:hint="Address"
         android:inputType="text"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email6"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_phone"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_email6"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email6" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_phone"
+        app:layout_constraintTop_toBottomOf="@+id/edt_regis_phone" />
 
     <TextView
         android:id="@+id/err_regis_address"
@@ -120,13 +120,13 @@
         android:text="Invalid account"
         android:textColor="@color/textError"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edt_email3"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email3"
+        app:layout_constraintBottom_toTopOf="@+id/edt_regis_address"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_address"
         app:layout_constraintHorizontal_bias="0.017"
-        app:layout_constraintStart_toStartOf="@+id/edt_email3" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_address" />
 
     <EditText
-        android:id="@+id/edt_email2"
+        android:id="@+id/edt_regis_name"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="32dp"
@@ -150,10 +150,10 @@
         android:text="Invalid account"
         android:textColor="@color/textError"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edt_email2"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email2"
+        app:layout_constraintBottom_toTopOf="@+id/edt_regis_name"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_name"
         app:layout_constraintHorizontal_bias="0.034"
-        app:layout_constraintStart_toStartOf="@+id/edt_email2" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_name" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -179,7 +179,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edt_email"
+        android:id="@+id/edt_regis_email"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="36dp"
@@ -190,10 +190,10 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email3"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_address"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_email3"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email3" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_address"
+        app:layout_constraintTop_toBottomOf="@+id/edt_regis_address" />
 
     <TextView
         android:id="@+id/textView5"
@@ -209,7 +209,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/edt_password"
+        android:id="@+id/edt_regis_password"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="36dp"
@@ -220,10 +220,10 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_email"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_email"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_email"
+        app:layout_constraintTop_toBottomOf="@+id/edt_regis_email" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/register_btn"
@@ -234,10 +234,10 @@
         android:fontFamily="sans-serif-black"
         android:text="Sign in"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email4"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_re_password"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/edt_email4"
-        app:layout_constraintTop_toBottomOf="@+id/edt_email4" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_re_password"
+        app:layout_constraintTop_toBottomOf="@+id/edt_regis_re_password" />
 
     <TextView
         android:id="@+id/textView6"
@@ -259,10 +259,10 @@
         android:text="Invalid account"
         android:textColor="@color/textError"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edt_email"
-        app:layout_constraintEnd_toEndOf="@+id/edt_email"
+        app:layout_constraintBottom_toTopOf="@+id/edt_regis_email"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_email"
         app:layout_constraintHorizontal_bias="0.034"
-        app:layout_constraintStart_toStartOf="@+id/edt_email" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_email" />
 
     <TextView
         android:id="@+id/err_regis_password"
@@ -272,9 +272,9 @@
         android:text="TextView"
         android:textColor="@color/textError"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/edt_password"
-        app:layout_constraintEnd_toEndOf="@+id/edt_password"
+        app:layout_constraintBottom_toTopOf="@+id/edt_regis_password"
+        app:layout_constraintEnd_toEndOf="@+id/edt_regis_password"
         app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toStartOf="@+id/edt_password" />
+        app:layout_constraintStart_toStartOf="@+id/edt_regis_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
