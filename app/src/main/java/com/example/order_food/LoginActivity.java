@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        ((Button)findViewById(R.id.login_btn)).setOnClickListener(new View.OnClickListener() {
+        ((Button)findViewById(R.id.register_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = ((EditText)findViewById(R.id.edt_email)).getText().toString().trim();
@@ -72,6 +72,14 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }
+            }
+        });
+
+        ((Button)findViewById(R.id.regis_btn)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }
