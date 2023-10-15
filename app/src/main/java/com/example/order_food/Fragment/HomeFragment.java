@@ -38,6 +38,8 @@ public class HomeFragment extends Fragment {
     List<PopularFoodCard> foods = new ArrayList<>();
 
 
+    boolean isScrolling = false;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -127,10 +129,24 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    isScrolling = false;
+                } else {
+                    isScrolling = true;
+                }
+            }
+        });
+
         recView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                if (e.getAction() == MotionEvent.ACTION_UP) {
+                if (!isScrolling && e.getAction() == MotionEvent.ACTION_UP) {
                     // Thực hiện điều hướng sang FoodDetailFragment khi một mục được chạm vào
                     FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance();
                     FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
@@ -145,7 +161,22 @@ public class HomeFragment extends Fragment {
         });
 
 
+//        recView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
+//            @Override
+//            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+//                 if ( e.getAction() == MotionEvent.ACTION_UP ) {
+//                    // Thực hiện điều hướng sang FoodDetailFragment khi một mục được chạm vào
+//                    FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance();
+//                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//
+//                    return true; // Đánh dấu rằng sự kiện đã được xử lý
+//                }
+//                return false;
+//            }
+//        });
         return view;
     }
-
 }
