@@ -1,32 +1,32 @@
 package com.example.order_food.Fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.order_food.Card.OrderCartCard;
-import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
 import com.example.order_food.adapter.OrderCartAdapter;
-import com.example.order_food.adapter.PopularAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements OrderCartAdapter.OnItemChangeListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,6 +60,7 @@ public class CartFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,10 +78,25 @@ public class CartFragment extends Fragment {
 
         RecyclerView recView = view.findViewById(R.id.rec_order_cart_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new OrderCartAdapter(orderCartCards));
+        OrderCartAdapter adapter = new OrderCartAdapter(orderCartCards);
+        adapter.setOnItemChangeListener(this);
+        recView.setAdapter(adapter);
 
-
+        float total = 0;
+        for(OrderCartCard orderCartCard: orderCartCards){
+            total = total +(orderCartCard.getFoodPrice() * orderCartCard.getQuantity());
+        }
+        TextView textView = view.findViewById(R.id.food_order_cart_total);
+        textView.setText(total+"$");
 
         return view;
     }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onListChange(String variable) {
+        TextView textView = requireView().findViewById(R.id.food_order_cart_total);
+        textView.setText(variable+"$");
+    }
+
 }

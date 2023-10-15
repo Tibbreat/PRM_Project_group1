@@ -20,6 +20,7 @@ import com.example.order_food.Fragment.HistoryFragment;
 import com.example.order_food.Fragment.HomeFragment;
 import com.example.order_food.Fragment.ProfileFragment;
 import com.example.order_food.Fragment.SearchFragment;
+import com.example.order_food.adapter.OrderCartAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
