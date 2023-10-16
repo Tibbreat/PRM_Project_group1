@@ -160,23 +160,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-//        recView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
-//            @Override
-//            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-//                 if ( e.getAction() == MotionEvent.ACTION_UP ) {
-//                    // Thực hiện điều hướng sang FoodDetailFragment khi một mục được chạm vào
-//                    FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance();
-//                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
-//
-//                    return true; // Đánh dấu rằng sự kiện đã được xử lý
-//                }
-//                return false;
-//            }
-//        });
         return view;
     }
 }

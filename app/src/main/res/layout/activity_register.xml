@@ -127,9 +127,9 @@
 
     <EditText
         android:id="@+id/edt_regis_name"
-        android:layout_width="325dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="329dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/inputfield"
         android:drawableLeft="@android:drawable/ic_menu_my_calendar"
         android:drawablePadding="5dp"
@@ -157,24 +157,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="75dp"
-        android:layout_height="66dp"
+        android:layout_width="53dp"
+        android:layout_height="46dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/icons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:fontFamily="serif"
-        android:text="Wave of foods"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -199,14 +187,12 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="Sign in"
         android:textColor="@color/textColor"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edt_regis_password"
@@ -227,15 +213,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/register_btn"
-        android:layout_width="150dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="122dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/greenbuttongradient"
         android:fontFamily="sans-serif-black"
         android:text="Sign in"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/edt_regis_re_password"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/edt_regis_re_password"
         app:layout_constraintTop_toBottomOf="@+id/edt_regis_re_password" />
 
@@ -247,7 +232,7 @@
         android:text="Already have an account ?"
         android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="@+id/register_btn"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="@+id/register_btn"
         app:layout_constraintTop_toBottomOf="@+id/register_btn" />
 
