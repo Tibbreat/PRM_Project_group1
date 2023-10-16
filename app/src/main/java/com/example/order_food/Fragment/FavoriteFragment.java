@@ -15,12 +15,13 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
+import com.example.order_food.adapter.FavoriteCartAdapter;
 import com.example.order_food.adapter.PopularAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteFragment extends Fragment {
+public class  FavoriteFragment extends Fragment {
 
     List<PopularFoodCard> foods = new ArrayList<>();
     public static FavoriteFragment newInstance() {
@@ -52,7 +53,7 @@ public class FavoriteFragment extends Fragment {
 
         RecyclerView recView = view.findViewById(R.id.rec_favorite_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(foods));
+        recView.setAdapter(new FavoriteCartAdapter(foods));
 
         return view;
     }

@@ -11,8 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.order_food.Card.OrderCartCard;
-import com.example.order_food.Fragment.CartFragment;
+import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
 
 import java.util.List;
@@ -22,11 +21,10 @@ public class OrderCartAdapter extends RecyclerView.Adapter<OrderCartAdapter.Orde
     public interface OnItemChangeListener {
         void onListChange(String variable);
     }
-    List<OrderCartCard> orderCartCards;
+    List<PopularFoodCard> orderCartCards;
     private OnItemChangeListener listener;
-    private CartFragment cartFragment;
 
-    public OrderCartAdapter(List<OrderCartCard> orderCart){
+    public OrderCartAdapter(List<PopularFoodCard> orderCart){
         orderCartCards = orderCart;
     }
 
@@ -47,7 +45,7 @@ public class OrderCartAdapter extends RecyclerView.Adapter<OrderCartAdapter.Orde
             holder.food_c_price.setText(orderCartCards.get(position).getFoodPrice() + "");
             holder.food_c_quantity.setText(orderCartCards.get(position).getQuantity()+"");
 
-            for(OrderCartCard orderCartCard: orderCartCards){
+            for(PopularFoodCard orderCartCard: orderCartCards){
                 total = total +(orderCartCard.getFoodPrice() * orderCartCard.getQuantity());
             }
         }

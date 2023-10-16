@@ -7,19 +7,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.order_food.Card.OrderCartCard;
+import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
 import com.example.order_food.adapter.OrderCartAdapter;
+import com.example.order_food.adapter.PopularAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +32,7 @@ public class CartFragment extends Fragment implements OrderCartAdapter.OnItemCha
 
     // TODO: Rename and change types of parameters
 
-    private List<OrderCartCard> orderCartCards = new ArrayList<>();
+    private List<PopularFoodCard> orderCartCards = new ArrayList<>();
 
     public CartFragment() {
 
@@ -67,9 +66,9 @@ public class CartFragment extends Fragment implements OrderCartAdapter.OnItemCha
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
-        OrderCartCard food1 = new OrderCartCard(1,R.drawable.discoun1,"Food 1",12, 1);
-        OrderCartCard food2 = new OrderCartCard(1,R.drawable.discount,"Food 2",15,2);
-        OrderCartCard food3 = new OrderCartCard(1,R.drawable.discount2,"Food 3",20,3);
+        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12, 1);
+        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15,2);
+        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20,3);
 
         orderCartCards.clear();
         orderCartCards.add(food1);
@@ -83,8 +82,8 @@ public class CartFragment extends Fragment implements OrderCartAdapter.OnItemCha
         recView.setAdapter(adapter);
 
         float total = 0;
-        for(OrderCartCard orderCartCard: orderCartCards){
-            total = total +(orderCartCard.getFoodPrice() * orderCartCard.getQuantity());
+        for(PopularFoodCard orderCartCard: orderCartCards){
+            total = total +(orderCartCard.getFoodImage() * orderCartCard.getQuantity());
         }
         TextView textView = view.findViewById(R.id.food_order_cart_total);
         textView.setText(total+"$");
