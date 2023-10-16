@@ -7,12 +7,21 @@ public class PopularFoodCard {
     private int foodImage;
     private String foodName;
     private float foodPrice;
+    private int quantity;
 
     public PopularFoodCard(int id, int foodImage, String foodName, float foodPrice) {
         this.id = id;
         this.foodImage = foodImage;
         this.foodName = foodName;
         this.foodPrice = foodPrice;
+    }
+
+    public PopularFoodCard(int id, int foodImage, String foodName, float foodPrice, int quantity) {
+        this.id = id;
+        this.foodImage = foodImage;
+        this.foodName = foodName;
+        this.foodPrice = foodPrice;
+        this.quantity = quantity;
     }
 
     public PopularFoodCard() {
@@ -48,5 +57,13 @@ public class PopularFoodCard {
 
     public void setFoodPrice(float foodPrice) {
         this.foodPrice = foodPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
