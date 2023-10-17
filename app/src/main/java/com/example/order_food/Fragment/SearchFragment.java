@@ -2,13 +2,23 @@ package com.example.order_food.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
+import com.example.order_food.adapter.PopularAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +35,9 @@ public class SearchFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    List<PopularFoodCard> foods = new ArrayList<>();
 
+    boolean isScrolling = false;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -60,7 +72,51 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12);
+        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15);
+        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20);
+
+        foods.clear();
+        foods.add(food1);
+        foods.add(food2);
+        foods.add(food3);
+
+        RecyclerView recView = view.findViewById(R.id.rec_food_search);
+        recView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recView.setAdapter(new PopularAdapter(foods));
+
+        recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    isScrolling = false;
+                } else {
+                    isScrolling = true;
+                }
+            }
+        });
+
+        recView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                if (!isScrolling && e.getAction() == MotionEvent.ACTION_UP) {
+                    // Thực hiện điều hướng sang FoodDetailFragment khi một mục được chạm vào
+                    FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance();
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+                    return true; // Đánh dấu rằng sự kiện đã được xử lý
+                }
+                return false;
+            }
+        });
+        return view;
     }
 }
