@@ -11,11 +11,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_order_cart_food"
         android:layout_width="match_parent"
-        android:layout_height="623dp" />
+        android:layout_height="679dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_gravity="bottom"
         android:layout_marginTop="600dp">
 
         <TextView
