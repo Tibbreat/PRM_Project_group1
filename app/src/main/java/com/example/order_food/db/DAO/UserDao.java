@@ -21,6 +21,9 @@ public interface UserDao {
             "password LIKE :password LIMIT 1")
     User login(String email, String password);
 
+    @Query("UPDATE user set name=:name,phone=:phone,address=:address where email=:email")
+    int updateUserProfile(String email,String phone, String address,String name);
+
     @Insert
     void insertAll(User... users);
 

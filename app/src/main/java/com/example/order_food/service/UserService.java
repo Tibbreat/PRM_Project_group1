@@ -31,4 +31,8 @@ public class UserService {
         User user = appDatabase.userDao().login(email,password);
         return user;
     }
+
+    public int updateUserProfile(String email,String name,String address,String phone){
+        return appDatabase.userDao().updateUserProfile(email,phone,address,name);
+    }
 }

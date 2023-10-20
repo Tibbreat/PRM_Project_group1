@@ -10,10 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.order_food.LoginActivity;
 import com.example.order_food.MainActivity;
 import com.example.order_food.R;
+import com.example.order_food.RegisterActivity;
+import com.example.order_food.service.UserService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,6 +54,22 @@ public class ProfileFragment extends Fragment {
         shared_pref = getActivity().getSharedPreferences("account", getActivity().MODE_PRIVATE);
         editor = shared_pref.edit();
 
+        EditText txt_name = view.findViewById(R.id.txt_profile_name);
+        EditText txt_address = view.findViewById(R.id.txt_profile_address);
+        EditText txt_email = view.findViewById(R.id.txt_profile_email);
+        EditText txt_phone = view.findViewById(R.id.txt_profile_phone);
+
+        String email = shared_pref.getString("email","");
+        String address = shared_pref.getString("address","");
+        String name = shared_pref.getString("name","");
+        String phone = shared_pref.getString("phone_number","");
+
+        txt_name.setText(name);
+        txt_address.setText(address);
+        txt_email.setText(email);
+        txt_phone.setText(phone);
+
+
         ((Button)view.findViewById(R.id.btn_logout)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +79,28 @@ public class ProfileFragment extends Fragment {
                 editor.commit();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        ((Button)view.findViewById(R.id.txt_profile_btn_save)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor = shared_pref.edit();
+                String newName = txt_name.getText().toString();
+                String newAddress = txt_address.getText().toString();
+                String newPhone = txt_phone.getText().toString();
+                editor.putString("address",newAddress);
+                editor.putString("phone_number",newPhone);
+                editor.putString("name",newName);
+                UserService userService = UserService.getInstance(getContext());
+                int rowEffect = userService.updateUserProfile(email,newName,newAddress,newPhone);
+                editor.commit();
+                if(rowEffect == 1){
+                    Toast.makeText(getContext(), "Change profile successfully!", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getContext(), "Change profile fail!", Toast.LENGTH_LONG).show();
+                }
             }
         });
         return view;

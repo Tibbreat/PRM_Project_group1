@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("password",password);
                         editor.putString("address",user.address);
                         editor.putString("phone_number",user.phone);
+                        editor.putString("name",user.name);
                         editor.commit();
                         Intent intent;
                         if(user.role.equals("admin")){
