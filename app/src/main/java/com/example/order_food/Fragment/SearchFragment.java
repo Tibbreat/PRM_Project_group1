@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
 import com.example.order_food.adapter.PopularAdapter;
+import com.example.order_food.db.entity.Food;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class SearchFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    List<PopularFoodCard> foods = new ArrayList<>();
+    List<Food> foods = new ArrayList<>();
 
     boolean isScrolling = false;
     public SearchFragment() {
@@ -80,9 +81,6 @@ public class SearchFragment extends Fragment {
         PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20);
 
         foods.clear();
-        foods.add(food1);
-        foods.add(food2);
-        foods.add(food3);
 
         RecyclerView recView = view.findViewById(R.id.rec_food_search);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));

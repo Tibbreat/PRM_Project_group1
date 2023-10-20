@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.order_food.db.entity.User;
+import com.example.order_food.service.UserService;
+
 public class LoginActivity extends AppCompatActivity {
 
 
@@ -22,9 +25,17 @@ public class LoginActivity extends AppCompatActivity {
         shared_pref = getSharedPreferences("account",MODE_PRIVATE);
         String usn = shared_pref.getString("email","");
         String usp = shared_pref.getString("password","");
+        UserService userService = UserService.getInstance(LoginActivity.this);
+        User user = userService.getUser(usn,usp);
 
-        if(!usn.equals("") && !usp.equals("")){
-            Intent newIntent = new Intent(LoginActivity.this,MainActivity.class);
+        if(user != null){
+            Intent newIntent;
+            if(user.role.equals("admin")){
+                newIntent = new Intent(LoginActivity.this, AdminActivity.class);
+            }
+            else{
+                newIntent = new Intent(LoginActivity.this, MainActivity.class);
+            }
             startActivity(newIntent);
         }
 
@@ -60,16 +71,26 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(!error){
                     editor = shared_pref.edit();
-                    editor.putString("email",email);
-                    editor.putString("password",password);
-                    editor.commit();
-                    if(email.contains("admin")){
-                        Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
+
+                    User user = userService.getUser(email,password);
+                    if(user != null){
+                        editor.putString("email",email);
+                        editor.putString("password",password);
+                        editor.putString("address",user.address);
+                        editor.putString("phone_number",user.phone);
+                        editor.commit();
+                        Intent intent;
+                        if(user.role.equals("admin")){
+                            intent = new Intent(LoginActivity.this, AdminActivity.class);
+                        }
+                        else{
+                            intent = new Intent(LoginActivity.this, MainActivity.class);
+                        }
                         startActivity(intent);
                     }
                     else{
-                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        startActivity(intent);
+                        err_email.setVisibility(View.VISIBLE);
+                        err_email.setText("* Email or password is incorrect!");
                     }
                 }
             }

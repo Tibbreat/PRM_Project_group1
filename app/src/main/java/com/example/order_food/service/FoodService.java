@@ -45,5 +45,8 @@ public class FoodService {
     public List<Food> getAllFoodItems() {
         return appDatabase.foodDao().getAllFoods();
     }
+
+    public List<Food> getAllNewFoods() {return appDatabase.foodDao().getAllNewFoods();}
+    public List<Food> getAllPopularFoods() {return appDatabase.foodDao().getAllPopularFoods();}
 }
 

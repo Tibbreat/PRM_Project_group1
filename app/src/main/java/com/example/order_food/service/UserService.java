@@ -27,4 +27,8 @@ public class UserService {
             return false;
         }
     }
+    public User getUser(String email,String password){
+        User user = appDatabase.userDao().login(email,password);
+        return user;
+    }
 }
