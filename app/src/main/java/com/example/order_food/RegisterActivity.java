@@ -1,5 +1,7 @@
 package com.example.order_food;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.example.order_food.db.entity.User;
+import com.example.order_food.service.UserService;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -82,10 +87,21 @@ public class RegisterActivity extends AppCompatActivity {
                     err_re_password.setVisibility(View.INVISIBLE);
                 }
 
-                if(!error){
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(intent);
+                if (!error) {
+                    User user = new User(name, email, password, "user", address, phone);
+
+                    UserService userService = UserService.getInstance(RegisterActivity.this);
+                    boolean isInserted = userService.insert(user);
+
+                    if (isInserted) {
+                        Toast.makeText(RegisterActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Registration failed. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
 
             }
         });
