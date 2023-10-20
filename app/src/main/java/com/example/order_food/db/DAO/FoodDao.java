@@ -26,5 +26,7 @@ public interface FoodDao {
 
     @Query("SELECT * FROM Food order by foodQuantity desc LIMIT 10")
     List<Food> getAllPopularFoods();
+    @Query("SELECT * FROM Food WHERE foodName LIKE '%' || :searchValue || '%'")
+    List<Food> getAllFoodsBySearchValue(String searchValue);
 
 }

@@ -28,7 +28,7 @@
             android:paddingStart="16dp" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:backgroundTint="#24BA66"

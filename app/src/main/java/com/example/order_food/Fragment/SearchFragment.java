@@ -12,11 +12,15 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
 import com.example.order_food.adapter.PopularAdapter;
 import com.example.order_food.db.entity.Food;
+import com.example.order_food.service.FoodService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,17 +79,24 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        // Inflate the layout for this fragment
-        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12);
-        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15);
-        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20);
-
+        List<Food> allFoods= getAllFoods();
         foods.clear();
+        foods.addAll(allFoods);
 
         RecyclerView recView = view.findViewById(R.id.rec_food_search);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(foods));
+        recView.setAdapter(new PopularAdapter(requireContext(),foods));
+        EditText search = view.findViewById(R.id.edt_search_value);
+        ((Button)view.findViewById(R.id.btn_search)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = search.getText().toString().trim();
+                foods.clear();
+                foods.addAll(getSearchFoods(name));
+                recView.getAdapter().notifyDataSetChanged();
 
+            }
+        });
         recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -115,6 +126,16 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
+
+
         return view;
+    }
+    private List<Food> getAllFoods() {
+        // Retrieve all food items from the database using FoodService
+        // You may want to run this on a background thread or use LiveData for better performance
+        return FoodService.getInstance(requireContext()).getAllFoodItems();
+    }
+    private List<Food> getSearchFoods(String searchValue){
+        return FoodService.getInstance(requireContext()).getSearchFoods(searchValue);
     }
 }
