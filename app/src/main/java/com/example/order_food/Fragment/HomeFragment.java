@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
 
         RecyclerView recView = view.findViewById(R.id.rec_popular_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(foods));
+        recView.setAdapter(new PopularAdapter(requireContext(),foods));
 
         TextView btnNew = view.findViewById(R.id.btn_home_new);
         TextView btnPopular = view.findViewById(R.id.btn_home_popular);

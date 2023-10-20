@@ -17,6 +17,7 @@ import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
 import com.example.order_food.adapter.PopularAdapter;
 import com.example.order_food.db.entity.Food;
+import com.example.order_food.service.FoodService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,16 +76,16 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        // Inflate the layout for this fragment
-        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12);
-        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15);
-        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20);
-
-        foods.clear();
+//        // Inflate the layout for this fragment
+//        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12);
+//        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15);
+//        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20);
+//
+//        foods.clear();
 
         RecyclerView recView = view.findViewById(R.id.rec_food_search);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(foods));
+        recView.setAdapter(new PopularAdapter(requireContext(),getAllFoods()));
 
         recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -116,5 +117,10 @@ public class SearchFragment extends Fragment {
             }
         });
         return view;
+    }
+    private List<Food> getAllFoods() {
+        // Retrieve all food items from the database using FoodService
+        // You may want to run this on a background thread or use LiveData for better performance
+        return FoodService.getInstance(requireContext()).getAllFoodItems();
     }
 }
