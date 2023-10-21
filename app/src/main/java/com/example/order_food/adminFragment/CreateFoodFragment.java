@@ -88,7 +88,13 @@ public class CreateFoodFragment extends Fragment {
 
         if (validateInput(foodName, foodPrice, foodQuantity, foodDescription, foodIngredients)) {
             // Save the image to app's internal storage
-            String imageFileName = saveImageToInternalStorage(selectedImageUri);
+            String imageFileName = null;
+            Uri imageUri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/drawable/eating");
+            if (selectedImageUri == null){
+                imageFileName = saveImageToInternalStorage(imageUri);
+            } else {
+                imageFileName = saveImageToInternalStorage(selectedImageUri);
+            }
 
             if (imageFileName != null) {
                 Food food = new Food(foodName, foodPrice, foodQuantity, foodDescription, foodIngredients, imageFileName);
@@ -153,11 +159,6 @@ public class CreateFoodFragment extends Fragment {
             }
         } catch (NumberFormatException e) {
             showToast("Invalid price or quantity format");
-            return false;
-        }
-
-        if (selectedImageUri == null) {
-            showToast("Choose an image");
             return false;
         }
 
