@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(user != null){
             Intent newIntent;
-            if(user.role.equals("admin")){
+            if(user.getEmail().contains("admin")){
                 newIntent = new Intent(LoginActivity.this, AdminActivity.class);
             }
             else{

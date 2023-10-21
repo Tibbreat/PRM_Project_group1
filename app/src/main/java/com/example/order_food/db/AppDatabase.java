@@ -11,7 +11,7 @@ import com.example.order_food.db.DAO.UserDao;
 import com.example.order_food.db.entity.Food;
 import com.example.order_food.db.entity.User;
 
-@Database(entities = {User.class, Food.class}, version = 1)
+@Database(entities = {User.class, Food.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 

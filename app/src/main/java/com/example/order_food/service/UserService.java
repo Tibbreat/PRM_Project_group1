@@ -35,4 +35,8 @@ public class UserService {
     public int updateUserProfile(String email,String name,String address,String phone){
         return appDatabase.userDao().updateUserProfile(email,phone,address,name);
     }
+
+    public int changePassword(String email,String newPassword){
+        return appDatabase.userDao().changePassword(email, newPassword);
+    }
 }
