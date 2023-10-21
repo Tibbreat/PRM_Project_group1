@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class User {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
     @ColumnInfo(name = "name")
     public String name;
@@ -32,6 +32,16 @@ public class User {
         this.address = address;
         this.phone = phone;
     }
+
+    public User(String name, String email, String password, String role, String address, String phone) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.address = address;
+        this.phone = phone;
+    }
+
     public User(){
 
     }

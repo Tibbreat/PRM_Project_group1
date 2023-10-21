@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -36,10 +37,10 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Name"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/txt_profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -71,10 +72,10 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Address"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editTextText3"
+                android:id="@+id/txt_profile_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -106,17 +107,18 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Email"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editTextText13"
+                android:id="@+id/txt_profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:inputType="textEmailAddress"
-                android:text="quang@gmail.com" />
+                android:text="quang@gmail.com"
+                android:enabled="false" />
         </LinearLayout>
 
         <LinearLayout
@@ -142,10 +144,10 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Phone"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editTextText14"
+                android:id="@+id/txt_profile_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -163,33 +165,59 @@
         android:layout_gravity="bottom"
         android:gravity="right">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="220dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="20dp"
-            android:layout_weight="0"
-            android:background="@drawable/greenbuttongradient"
-            android:padding="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Save information"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_logout"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/logout"
-            android:text="Log out"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/txt_profile_btn_save"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="0"
+                android:background="@drawable/greenbuttongradient"
+                android:padding="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Save Information"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/change_password"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/change_password"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="0"
+                android:background="@drawable/greenbuttongradient"
+                android:padding="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Change Password"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_logout"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_logout"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/logout"
+                android:text="Log out"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </FrameLayout>

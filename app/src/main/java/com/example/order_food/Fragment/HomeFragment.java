@@ -2,14 +2,20 @@ package com.example.order_food.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -18,6 +24,8 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
 import com.example.order_food.adapter.PopularAdapter;
+import com.example.order_food.db.entity.Food;
+import com.example.order_food.service.FoodService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +37,10 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
-    List<PopularFoodCard> foods = new ArrayList<>();
+    List<Food> foods = new ArrayList<>();
 
+
+    boolean isScrolling = false;
 
 
     public HomeFragment() {
@@ -65,18 +75,15 @@ public class HomeFragment extends Fragment {
         ImageSlider imageSlider = view.findViewById(R.id.image_slider);
         imageSlider.setImageList(imageList);
 
-        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12);
-        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15);
-        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20);
+        List<Food> allNewFoods = FoodService.getInstance(requireContext()).getAllNewFoods();
+        List<Food> allPopularFoods = FoodService.getInstance(requireContext()).getAllPopularFoods();
 
         foods.clear();
-        foods.add(food1);
-        foods.add(food2);
-        foods.add(food3);
+        foods.addAll(allPopularFoods);
 
         RecyclerView recView = view.findViewById(R.id.rec_popular_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(foods));
+        recView.setAdapter(new PopularAdapter(requireContext(),foods));
 
         TextView btnNew = view.findViewById(R.id.btn_home_new);
         TextView btnPopular = view.findViewById(R.id.btn_home_popular);
@@ -87,17 +94,10 @@ public class HomeFragment extends Fragment {
                 int textColor = ContextCompat.getColor(requireContext(), R.color.white);
                 btnNew.setTextColor(textColor);
                 btnNew.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.greenbuttongradient));
-
                 btnPopular.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
                 btnPopular.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.textviewshape));
-
                 foods.clear();
-                foods.add(food3);
-                foods.add(food1);
-                foods.add(food2);
-                foods.add(food2);
-                foods.add(food3);
-
+                foods.addAll(allNewFoods);
                 recView.getAdapter().notifyDataSetChanged();
             }
         });
@@ -110,14 +110,40 @@ public class HomeFragment extends Fragment {
                 btnPopular.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.greenbuttongradient));
                 btnNew.setTextColor(ContextCompat.getColor(requireContext(), R.color.black));
                 btnNew.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.textviewshape));
-
-
                 foods.clear();
-                foods.add(food1);
-                foods.add(food2);
-                foods.add(food3);
-
+                foods.addAll(allPopularFoods);
                 recView.getAdapter().notifyDataSetChanged();
+            }
+        });
+
+
+        recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    isScrolling = false;
+                } else {
+                    isScrolling = true;
+                }
+            }
+        });
+
+        recView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                if (!isScrolling && e.getAction() == MotionEvent.ACTION_UP) {
+                    // Thực hiện điều hướng sang FoodDetailFragment khi một mục được chạm vào
+                    FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance();
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+                    return true; // Đánh dấu rằng sự kiện đã được xử lý
+                }
+                return false;
             }
         });
 
