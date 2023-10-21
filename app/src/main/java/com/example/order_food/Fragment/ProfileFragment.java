@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.order_food.ChangePasswordActivity;
 import com.example.order_food.LoginActivity;
 import com.example.order_food.MainActivity;
 import com.example.order_food.R;
@@ -78,6 +79,14 @@ public class ProfileFragment extends Fragment {
                 editor.remove("password");
                 editor.commit();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ((Button)view.findViewById(R.id.change_password)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
                 startActivity(intent);
             }
         });

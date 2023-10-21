@@ -24,6 +24,9 @@ public interface UserDao {
     @Query("UPDATE user set name=:name,phone=:phone,address=:address where email=:email")
     int updateUserProfile(String email,String phone, String address,String name);
 
+    @Query("UPDATE user set password=:newPassword where email=:email")
+    int changePassword(String email,String newPassword);
+
     @Insert
     void insertAll(User... users);
 
