@@ -39,4 +39,9 @@ public class UserService {
     public int changePassword(String email,String newPassword){
         return appDatabase.userDao().changePassword(email, newPassword);
     }
+
+    public User getUserReset(String email,String address){
+        User user = appDatabase.userDao().reset(email,address);
+        return user;
+    }
 }
