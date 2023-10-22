@@ -7,7 +7,8 @@ import androidx.room.Query;
 
 import com.example.order_food.db.entity.Order;
 
-public interface OrderDao {
+@Dao
+public  interface OrderDao {
     @Query("SELECT COUNT(*) FROM `Order`")
     int getOrderCount();
 }
