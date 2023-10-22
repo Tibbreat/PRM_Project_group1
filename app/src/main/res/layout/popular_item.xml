@@ -52,7 +52,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/addtocartshape"
                 android:gravity="center"
-                android:text="Add to cart"
+                android:text="View Detail"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@+id/food_popular_price"
