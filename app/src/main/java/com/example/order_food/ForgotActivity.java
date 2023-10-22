@@ -2,6 +2,7 @@ package com.example.order_food;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,8 +30,8 @@ public class ForgotActivity extends AppCompatActivity {
                 String email = ((EditText) findViewById(R.id.edt_forgot_email)).getText().toString().trim();
                 String address = ((EditText)findViewById(R.id.edt_forgot_address)).getText().toString().trim();
 
-                TextView err_forgot_email = ((TextView) findViewById(R.id.edt_forgot_email));
-                TextView err_forgot_address = ((TextView)findViewById(R.id.edt_forgot_address));
+                TextView err_forgot_email = ((TextView) findViewById(R.id.err_forgot_email));
+                TextView err_forgot_address = ((TextView)findViewById(R.id.err_forgot_address));
 
                 if (email.length() == 0) {
                     err_forgot_email.setVisibility(View.VISIBLE);
