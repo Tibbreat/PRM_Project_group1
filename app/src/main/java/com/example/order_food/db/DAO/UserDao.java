@@ -35,4 +35,8 @@ public interface UserDao {
 
     @Insert
     void insertUser(User user);
+
+    @Query("SELECT * FROM user WHERE email LIKE :email AND " +
+            "address LIKE :address LIMIT 1")
+    User reset(String email, String address);
 }
