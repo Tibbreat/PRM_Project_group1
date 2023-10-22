@@ -3,6 +3,7 @@ package com.example.order_food.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +20,24 @@ import com.example.order_food.db.entity.Food;
 import java.util.List;
 
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularHolder> {
+    private static final String TAG = "MyActivity";
 
+    private IclickItemFood ilickItemFood;
+    public interface IclickItemFood {
+        void getFoodDetail(Food food);
+    }
+
+    public PopularAdapter(IclickItemFood ilickItemFood) {
+        this.ilickItemFood = ilickItemFood;
+    }
 
     List<Food> foods;
     private Context context;
 
-    public PopularAdapter(Context context,List<Food> foods) {
+    public PopularAdapter(Context context,List<Food> foods, IclickItemFood iclickItemFood) {
         this.context = context;
         this.foods = foods;
+        this.ilickItemFood = iclickItemFood;
     }
 
     @NonNull
@@ -39,10 +50,11 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularH
 
     @Override
     public void onBindViewHolder(@NonNull PopularAdapter.PopularHolder holder, int position) {
-        holder.food_p_name.setText(foods.get(position).getFoodName());
-        holder.food_p_price.setText(foods.get(position).getFoodPrice() + "");
-        holder.food_p_txt_remain.setText("remain: " + foods.get(position).getFoodQuantity());
 
+        final  Food food = foods.get(position);
+        holder.food_p_name.setText(food.getFoodName());
+        holder.food_p_price.setText(food.getFoodPrice() + "");
+        holder.food_p_txt_remain.setText("remain: " + food.getFoodQuantity());
         try {
             String imageFileName = foods.get(position).getImageUri(); // This should be the file path
             Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir() + "/" + imageFileName);
@@ -50,6 +62,12 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularH
         } catch (Exception e) {
             e.printStackTrace();
         }
+        holder.btn_viewDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ilickItemFood.getFoodDetail(food);
+            }
+        });
     }
 
     @Override
@@ -65,12 +83,15 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularH
 
         TextView food_p_txt_remain;
 
+        TextView btn_viewDetail;
+
         public PopularHolder(@NonNull View itemView) {
             super(itemView);
             food_p_view = itemView.findViewById(R.id.food_popular_image);
             food_p_name = itemView.findViewById(R.id.food_popular_name);
             food_p_price = itemView.findViewById(R.id.food_popular_price);
             food_p_txt_remain = itemView.findViewById(R.id.txt_remain);
+            btn_viewDetail = itemView.findViewById(R.id.add_to_cart_popular);
         }
     }
 }
