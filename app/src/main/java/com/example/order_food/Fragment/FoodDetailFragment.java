@@ -52,11 +52,15 @@ public class FoodDetailFragment extends Fragment {
                 food_name.setText("Name : " + food.getFoodName());
                 food_description.setText("Food's description : " + food.getFoodDescription());
                 food_price.setText(String.valueOf("Price: "+food.getFoodPrice()+" $"));
-                File imgFile = new  File("/sdcard/Images/"+food.getImageUri());
-                if(imgFile.exists()){
-                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    food_image.setImageBitmap(myBitmap);
+                try {
+                    String imageFileName = food.getImageUri();
+                    Bitmap bitmap = BitmapFactory.decodeFile(requireContext().getFilesDir() + "/" + imageFileName);
+                    food_image.setImageBitmap(bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("image", "onCreateView: " + e);
                 }
+
             }
         }
         return view;
