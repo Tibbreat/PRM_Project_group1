@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -85,7 +86,19 @@ public class SearchFragment extends Fragment {
 
         RecyclerView recView = view.findViewById(R.id.rec_food_search);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(requireContext(),foods));
+        recView.setAdapter(new PopularAdapter(requireContext(), foods, new PopularAdapter.IclickItemFood() {
+            @Override
+            public void getFoodDetail(Food food) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("food", food);
+                FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
+                foodDetailFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
+                transaction.commit();
+            }
+        }));
         EditText search = view.findViewById(R.id.edt_search_value);
         ((Button)view.findViewById(R.id.btn_search)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,37 +110,6 @@ public class SearchFragment extends Fragment {
 
             }
         });
-        recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    isScrolling = false;
-                } else {
-                    isScrolling = true;
-                }
-            }
-        });
-
-        recView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                if (!isScrolling && e.getAction() == MotionEvent.ACTION_UP) {
-                    // Thực hiện điều hướng sang FoodDetailFragment khi một mục được chạm vào
-                    FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance();
-                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-                    return true; // Đánh dấu rằng sự kiện đã được xử lý
-                }
-                return false;
-            }
-        });
-
-
         return view;
     }
     private List<Food> getAllFoods() {

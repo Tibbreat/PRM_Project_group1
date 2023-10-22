@@ -1,5 +1,6 @@
 package com.example.order_food.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.example.order_food.adapter.PopularAdapter;
 import com.example.order_food.db.entity.Food;
 import com.example.order_food.service.FoodService;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +44,6 @@ public class HomeFragment extends Fragment {
 
 
     boolean isScrolling = false;
-
 
     public HomeFragment() {
         // Required empty public constructor
@@ -83,7 +85,19 @@ public class HomeFragment extends Fragment {
 
         RecyclerView recView = view.findViewById(R.id.rec_popular_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(requireContext(),foods));
+        recView.setAdapter(new PopularAdapter(requireContext(), foods, new PopularAdapter.IclickItemFood() {
+            @Override
+            public void getFoodDetail(Food food) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("food", food);
+                FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
+                foodDetailFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
+                transaction.commit();
+            }
+        }));
 
         TextView btnNew = view.findViewById(R.id.btn_home_new);
         TextView btnPopular = view.findViewById(R.id.btn_home_popular);
@@ -115,38 +129,7 @@ public class HomeFragment extends Fragment {
                 recView.getAdapter().notifyDataSetChanged();
             }
         });
-
-
-        recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    isScrolling = false;
-                } else {
-                    isScrolling = true;
-                }
-            }
-        });
-
-        recView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                if (!isScrolling && e.getAction() == MotionEvent.ACTION_UP) {
-                    // Thực hiện điều hướng sang FoodDetailFragment khi một mục được chạm vào
-                    FoodDetailFragment foodDetailFragment = FoodDetailFragment.newInstance();
-                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-                    return true; // Đánh dấu rằng sự kiện đã được xử lý
-                }
-                return false;
-            }
-        });
-
         return view;
     }
+
 }
