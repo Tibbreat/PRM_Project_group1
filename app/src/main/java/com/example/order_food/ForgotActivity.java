@@ -54,10 +54,10 @@ public class ForgotActivity extends AppCompatActivity {
                     User user = userService.getUserReset(email, address);
 
                     if (user != null) {
-                        Toast.makeText(ForgotActivity.this, "Account does not exist!", Toast.LENGTH_SHORT).show();
-                    } else {
                         Intent intent = new Intent(ForgotActivity.this, ChangePasswordActivity.class);
                         startActivity(intent);
+                    } else {
+                        Toast.makeText(ForgotActivity.this, "Account does not exist!", Toast.LENGTH_SHORT).show();
                     }
 
                 }
