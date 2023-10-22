@@ -29,4 +29,7 @@ public interface FoodDao {
     @Query("SELECT * FROM Food WHERE foodName LIKE '%' || :searchValue || '%'")
     List<Food> getAllFoodsBySearchValue(String searchValue);
 
+    @Query("SELECT COUNT(*) FROM Food")
+    int getFoodCount();
+
 }

@@ -60,4 +60,8 @@ public class UserService {
     public List<User> getAll() {
         return appDatabase.userDao().getAll();
     }
+
+    public int getUserCount() {
+        return appDatabase.userDao().getUserCount();
+    }
 }

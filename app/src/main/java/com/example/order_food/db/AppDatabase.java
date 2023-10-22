@@ -7,6 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.order_food.db.DAO.FoodDao;
+import com.example.order_food.db.DAO.OrderDao;
 import com.example.order_food.db.DAO.UserDao;
 import com.example.order_food.db.entity.Food;
 import com.example.order_food.db.entity.User;
@@ -26,4 +27,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
     public abstract FoodDao foodDao();
+
+    public abstract OrderDao orderDao();
 }

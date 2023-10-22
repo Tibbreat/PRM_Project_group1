@@ -5,7 +5,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.order_food.db.entity.Food;
 import com.example.order_food.db.entity.User;
 
 import java.util.List;
@@ -43,4 +42,7 @@ public interface UserDao {
 
     @Delete
     void deleteUser(User user);
+
+    @Query("SELECT COUNT(*) FROM user")
+    int getUserCount();
 }

@@ -52,5 +52,9 @@ public class FoodService {
     public List<Food> getSearchFoods(String searchValue){
         return appDatabase.foodDao().getAllFoodsBySearchValue(searchValue);
     }
+
+    public int getFoodCount() {
+        return appDatabase.foodDao().getFoodCount();
+    }
 }
 
