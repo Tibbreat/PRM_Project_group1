@@ -76,7 +76,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/txt_number_orders"
+                android:id="@+id/txt_number_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

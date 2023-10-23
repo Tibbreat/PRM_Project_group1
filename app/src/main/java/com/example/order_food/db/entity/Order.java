@@ -2,11 +2,16 @@ package com.example.order_food.db.entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.order_food.util.LocalDateConverter;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-public class Order {
+@TypeConverters(LocalDateConverter.class)
+public class Order implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private LocalDate orderDate;

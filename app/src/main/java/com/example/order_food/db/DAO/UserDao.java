@@ -39,4 +39,10 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE email LIKE :email AND " +
             "address LIKE :address LIMIT 1")
     User reset(String email, String address);
+
+    @Delete
+    void deleteUser(User user);
+
+    @Query("SELECT COUNT(*) FROM user")
+    int getUserCount();
 }

@@ -32,8 +32,8 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        dashboard = DashboardFragment.newInstance(null,null);
-        accountManagement = AccountManagementFragment.newInstance(null,null);
+        dashboard = DashboardFragment.newInstance();
+        accountManagement = AccountManagementFragment.newInstance();
         foodManagement = FoodManagementFragment.newInstance();
         orderManagement = OrderManagementFragment.newInstance(null,null);
         profile = ProfileFragment.newInstance();

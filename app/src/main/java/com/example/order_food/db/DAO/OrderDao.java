@@ -1,4 +1,14 @@
 package com.example.order_food.db.DAO;
 
-public interface OrderDao {
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import com.example.order_food.db.entity.Order;
+
+@Dao
+public  interface OrderDao {
+    @Query("SELECT COUNT(*) FROM `Order`")
+    int getOrderCount();
 }

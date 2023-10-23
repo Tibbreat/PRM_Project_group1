@@ -6,6 +6,8 @@ import com.example.order_food.db.AppDatabase;
 import com.example.order_food.db.entity.Food;
 import com.example.order_food.db.entity.User;
 
+import java.util.List;
+
 public class UserService {
     private static UserService instance;
     private AppDatabase appDatabase;
@@ -43,5 +45,23 @@ public class UserService {
     public User getUserReset(String email,String address){
         User user = appDatabase.userDao().reset(email,address);
         return user;
+    }
+
+    public boolean deleteUser(User user) {
+        try {
+            appDatabase.userDao().deleteUser(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<User> getAll() {
+        return appDatabase.userDao().getAll();
+    }
+
+    public int getUserCount() {
+        return appDatabase.userDao().getUserCount();
     }
 }
