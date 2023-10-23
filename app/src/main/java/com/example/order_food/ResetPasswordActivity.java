@@ -20,10 +20,15 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private EditText edtNewPassword;
     private EditText edtConfirmPassword;
     private Button changePasswordBtn;
+    private String userEmail;
     SharedPreferences shared_pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intentUser = getIntent();
+        if (intentUser != null) {
+            userEmail = intentUser.getStringExtra("userEmail");
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
@@ -40,12 +45,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
         changePasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changePassword();
+                changePassword(userEmail);
             }
         });
     }
 
-    private void changePassword() {
+    private void changePassword(String userEmailS) {
         String newPassword = edtNewPassword.getText().toString();
         String confirmPassword = edtConfirmPassword.getText().toString();
 
@@ -53,6 +58,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
         TextView err_confirmNewPassword = ((TextView)findViewById(R.id.err_confirmNewPass));
 
         boolean error = false;
+
+        if (userEmailS.isEmpty()) {
+            Toast.makeText(ResetPasswordActivity.this, "Failed connect!", Toast.LENGTH_SHORT).show();
+            error = true;
+        }
 
         // Validate new password
         if (newPassword.isEmpty()) {
@@ -78,11 +88,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         if(!error){
             shared_pref = getSharedPreferences("account", MODE_PRIVATE);
-            String userEmail = shared_pref.getString("email", "");
-            String userPassword = shared_pref.getString("password", "");
 
             UserService userService = UserService.getInstance(this);
-            User user = userService.getUser(userEmail, userPassword);
+            User user = userService.getUserByEmail(userEmailS);
             if (user != null) {
                 // Update the password
                 int rowsAffected = userService.changePassword(userEmail, newPassword);

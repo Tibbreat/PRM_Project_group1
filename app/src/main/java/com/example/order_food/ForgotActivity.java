@@ -55,6 +55,7 @@ public class ForgotActivity extends AppCompatActivity {
 
                     if (user != null) {
                         Intent intent = new Intent(ForgotActivity.this, ResetPasswordActivity.class);
+                        intent.putExtra("userEmail", email);
                         startActivity(intent);
                     } else {
                         Toast.makeText(ForgotActivity.this, "Account does not exist!", Toast.LENGTH_SHORT).show();
