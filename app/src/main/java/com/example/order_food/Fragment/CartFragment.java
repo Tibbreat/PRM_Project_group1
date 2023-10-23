@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.Config.PathDataForPreferences;
-import com.example.order_food.Config.StaticDefineForSystem;
 import com.example.order_food.R;
 import com.example.order_food.adapter.OrderCartAdapter;
 import com.example.order_food.service.FoodService;

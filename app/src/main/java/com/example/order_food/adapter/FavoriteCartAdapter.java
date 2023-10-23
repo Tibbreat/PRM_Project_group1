@@ -14,13 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.Config.PathDataForPreferences;
-import com.example.order_food.Config.StaticDefineForSystem;
-import com.example.order_food.Fragment.CartFragment;
-import com.example.order_food.Fragment.FavoriteFragment;
 import com.example.order_food.R;
 
 import java.util.List;
-import java.util.Objects;
 
 public class FavoriteCartAdapter extends RecyclerView.Adapter<FavoriteCartAdapter.FavoriteCartHolder> {
 
@@ -71,7 +67,7 @@ public class FavoriteCartAdapter extends RecyclerView.Adapter<FavoriteCartAdapte
             });
             (itemView.findViewById(R.id.add_to_cart_favorite)).setOnClickListener(view -> {
                 int foodId = favoriteFoodCart.get(getAdapterPosition()).getId();
-                PathDataForPreferences.addNewOrderCart(userId, foodId);
+                PathDataForPreferences.addNewOrderCart(userId, foodId+"");
             });
         }
     }

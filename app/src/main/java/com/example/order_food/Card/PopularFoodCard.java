@@ -4,19 +4,19 @@ import android.net.Uri;
 
 public class PopularFoodCard {
     private int id;
-    private int foodImage;
+    private String foodImage;
     private String foodName;
     private float foodPrice;
     private int quantity;
 
-    public PopularFoodCard(int id, int foodImage, String foodName, float foodPrice) {
+    public PopularFoodCard(int id, String foodImage, String foodName, float foodPrice) {
         this.id = id;
         this.foodImage = foodImage;
         this.foodName = foodName;
         this.foodPrice = foodPrice;
     }
 
-    public PopularFoodCard(int id, int foodImage, String foodName, float foodPrice, int quantity) {
+    public PopularFoodCard(int id, String foodImage, String foodName, float foodPrice, int quantity) {
         this.id = id;
         this.foodImage = foodImage;
         this.foodName = foodName;
@@ -35,11 +35,11 @@ public class PopularFoodCard {
         this.id = id;
     }
 
-    public int getFoodImage() {
+    public String getFoodImage() {
         return foodImage;
     }
 
-    public void setFoodImage(int foodImage) {
+    public void setFoodImage(String foodImage) {
         this.foodImage = foodImage;
     }
 

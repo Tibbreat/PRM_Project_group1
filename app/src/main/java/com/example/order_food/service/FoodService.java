@@ -2,6 +2,7 @@ package com.example.order_food.service;
 
 import android.content.Context;
 
+import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.db.AppDatabase;
 import com.example.order_food.db.entity.Food;
 
@@ -55,6 +56,9 @@ public class FoodService {
 
     public int getFoodCount() {
         return appDatabase.foodDao().getFoodCount();
+    }
+    public List<PopularFoodCard>  getFoodItemsByListOfID(List<PopularFoodCard> ids){
+        return null;
     }
 }
 
