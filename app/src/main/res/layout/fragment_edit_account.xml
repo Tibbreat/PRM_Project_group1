@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="10dp"
-    tools:context=".adminFragment.CreateAccoutFragment">
+    tools:context=".adminFragment.EditAccoutFragment">
 
     <RadioGroup
-        android:id="@+id/ra_role"
+        android:id="@+id/ra_role_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -17,14 +17,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <RadioButton
-            android:id="@+id/ra_role_User"
+            android:id="@+id/ra_role_user_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="User" />
 
         <RadioButton
-            android:id="@+id/ra_role_admin"
+            android:id="@+id/ra_role_admin_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -32,7 +32,7 @@
     </RadioGroup>
 
     <EditText
-        android:id="@+id/edt_account_phone"
+        android:id="@+id/edt_account_phone_update"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="32dp"
@@ -44,14 +44,15 @@
         android:hint="Phone number"
         android:inputType="number"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_account_name"
+        app:layout_constraintEnd_toEndOf="@+id/edt_account_name_update"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_account_name"
-        app:layout_constraintTop_toBottomOf="@+id/edt_account_name" />
+        app:layout_constraintStart_toStartOf="@+id/edt_account_name_update"
+        app:layout_constraintTop_toBottomOf="@+id/edt_account_name_update"
+        android:enabled="false"/>
 
 
     <EditText
-        android:id="@+id/edt_account_address"
+        android:id="@+id/edt_account_address_update"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="36dp"
@@ -62,14 +63,15 @@
         android:hint="Address"
         android:inputType="text"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_account_phone"
+        app:layout_constraintEnd_toEndOf="@+id/edt_account_phone_update"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_account_phone"
-        app:layout_constraintTop_toBottomOf="@+id/edt_account_phone" />
+        app:layout_constraintStart_toStartOf="@+id/edt_account_phone_update"
+        app:layout_constraintTop_toBottomOf="@+id/edt_account_phone_update"
+        android:enabled="false"/>
 
 
     <EditText
-        android:id="@+id/edt_account_name"
+        android:id="@+id/edt_account_name_update"
         android:layout_width="329dp"
         android:layout_height="48dp"
         android:layout_marginTop="48dp"
@@ -81,13 +83,13 @@
         android:inputType="text"
         android:paddingLeft="15dp"
         app:layout_constraintEnd_toEndOf="@+id/textView5"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        android:enabled="false"/>
 
     <ImageButton
-        android:id="@+id/buttonBackToAccountManagementC"
+        android:id="@+id/buttonBackToAccountList"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
@@ -99,7 +101,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edt_account_email"
+        android:id="@+id/edt_account_email_update"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="36dp"
@@ -110,17 +112,18 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_account_address"
+        app:layout_constraintEnd_toEndOf="@+id/edt_account_address_update"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_account_address"
-        app:layout_constraintTop_toBottomOf="@+id/edt_account_address" />
+        app:layout_constraintStart_toStartOf="@+id/edt_account_address_update"
+        app:layout_constraintTop_toBottomOf="@+id/edt_account_address_update"
+        android:enabled="false"/>
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Add Account"
+        android:text="Edit Account"
         android:textColor="@color/textColor"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +132,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edt_account_password"
+        android:id="@+id/edt_account_password_update"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="36dp"
@@ -138,27 +141,28 @@
         android:drawablePadding="5dp"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword"
+        android:inputType="text"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_account_email"
+        app:layout_constraintEnd_toEndOf="@+id/edt_account_email_update"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_account_email"
-        app:layout_constraintTop_toBottomOf="@+id/edt_account_email" />
+        app:layout_constraintStart_toStartOf="@+id/edt_account_email_update"
+        app:layout_constraintTop_toBottomOf="@+id/edt_account_email_update"
+        android:enabled="false"/>
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_add_account"
+        android:id="@+id/btn_update_account"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:background="@drawable/greenbuttongradient"
         android:fontFamily="sans-serif-black"
-        android:text="Add account"
+        android:text="Upload account"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/edt_account_password"
+        app:layout_constraintEnd_toEndOf="@+id/edt_account_password_update"
         app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="@+id/edt_account_password"
-        app:layout_constraintTop_toBottomOf="@+id/edt_account_password" />
+        app:layout_constraintStart_toStartOf="@+id/edt_account_password_update"
+        app:layout_constraintTop_toBottomOf="@+id/edt_account_password_update"/>
 
 
 

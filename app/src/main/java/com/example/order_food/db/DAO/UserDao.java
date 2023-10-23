@@ -36,8 +36,8 @@ public interface UserDao {
     @Insert
     void insertUser(User user);
 
-    @Query("SELECT * FROM user WHERE email LIKE :email AND " +
-            "address LIKE :address LIMIT 1")
+    @Query("SELECT * FROM user WHERE email = :email AND " +
+            "address = :address LIMIT 1")
     User reset(String email, String address);
 
     @Delete
@@ -45,6 +45,12 @@ public interface UserDao {
 
     @Query("SELECT COUNT(*) FROM user")
     int getUserCount();
-    @Query("SELECT * FROM user WHERE email LIKE :email LIMIT 1")
+    @Query("SELECT * FROM user WHERE email = :email LIMIT 1")
     User getUserByEmail(String email);
+
+    @Query("SELECT * FROM user WHERE id = :id LIMIT 1")
+    User getUserById(int id);
+
+    @Query("UPDATE user set role=:role where id=:userId")
+    int updateRole(int userId,String role);
 }
