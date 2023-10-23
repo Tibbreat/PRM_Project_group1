@@ -51,11 +51,25 @@ public class DashboardFragment extends Fragment {
         number_user = view.findViewById(R.id.txt_number_user);
         number_order = view.findViewById(R.id.txt_number_order);
         number_food = view.findViewById(R.id.txt_number_food);
+        btnReload = view.findViewById(R.id.btn_reloadDashboard);
 
         UserService userService = UserService.getInstance(requireContext());
         OrderService orderService = OrderService.getInstance(requireContext());
         FoodService foodService = FoodService.getInstance(requireContext());
 
+        loadNumbers(userService, orderService, foodService);
+
+        btnReload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadNumbers(userService, orderService, foodService);
+            }
+        });
+
+        return view;
+    }
+
+    private void loadNumbers(UserService userService, OrderService orderService, FoodService foodService) {
         int numberUser = userService.getUserCount();
         int numberOrder = orderService.getOrderCount();
         int numberFood = foodService.getFoodCount();
@@ -63,8 +77,6 @@ public class DashboardFragment extends Fragment {
         number_user.setText(String.valueOf(numberUser));
         number_order.setText(String.valueOf(numberOrder));
         number_food.setText(String.valueOf(numberFood));
-
-        return view;
     }
 
 

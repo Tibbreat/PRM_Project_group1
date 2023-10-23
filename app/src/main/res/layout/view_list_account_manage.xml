@@ -90,9 +90,22 @@
                 tools:layout_editor_absoluteX="30dp" />
 
             <ImageButton
+                android:id="@+id/btn_account_edit"
+                android:layout_width="25dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="300dp"
+                android:layout_marginTop="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Go to Account Edit"
+                android:src="@drawable/edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <ImageButton
                 android:id="@+id/btn_account_delete"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="25dp"
+                android:layout_height="21dp"
                 android:layout_marginStart="300dp"
                 android:layout_marginTop="128dp"
                 android:background="?attr/selectableItemBackground"

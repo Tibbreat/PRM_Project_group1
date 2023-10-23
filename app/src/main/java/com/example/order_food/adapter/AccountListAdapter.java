@@ -1,6 +1,7 @@
 package com.example.order_food.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -12,7 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.order_food.ForgotActivity;
+import com.example.order_food.LoginActivity;
 import com.example.order_food.R;
+import com.example.order_food.adminFragment.EditAccoutFragment;
 import com.example.order_food.db.entity.User;
 import com.example.order_food.service.UserService;
 
@@ -53,6 +57,12 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
                 notifyItemRemoved(position);
             }
         });
+
+        holder.btnEdit.setOnClickListener(v -> {
+            Intent intent = new Intent(context, EditAccoutFragment.class);
+            intent.putExtra("userId", user.getId());
+            context.startActivity(intent);
+        });
     }
 
 
@@ -70,6 +80,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
         TextView accountRoleTextView;
 
         ImageButton btnDelete;
+        ImageButton btnEdit;
 
         AccountViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +91,7 @@ public class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.
             accountPasswordTextView = itemView.findViewById(R.id.account_password);
             accountRoleTextView = itemView.findViewById(R.id.account_role);
             btnDelete = itemView.findViewById(R.id.btn_account_delete);
+            btnEdit = itemView.findViewById(R.id.btn_account_edit);
 
         }
     }

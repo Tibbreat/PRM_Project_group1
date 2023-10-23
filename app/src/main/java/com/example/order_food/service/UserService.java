@@ -68,4 +68,8 @@ public class UserService {
         User user = appDatabase.userDao().getUserByEmail(email);
         return user;
     }
+    public User getUserById(int id){
+        User user = appDatabase.userDao().getUserById(id);
+        return user;
+    }
 }

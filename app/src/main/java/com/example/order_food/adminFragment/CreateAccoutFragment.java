@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,9 +26,8 @@ import java.io.InputStream;
 public class CreateAccoutFragment extends Fragment {
     private Button btnAddAccount;
     private ImageButton btnBack;
-    private EditText editAccountName, editAccountEmail, editAccountPhone, editAccountAddress, editAccountPassword, editAccountRePassword;
-    private RadioButton radioUser;
-    private RadioButton radioAdmin;
+    private EditText editAccountName, editAccountEmail, editAccountPhone, editAccountAddress, editAccountPassword;
+    private RadioGroup radioGroupRole;
     public CreateAccoutFragment() {
     }
 
@@ -37,9 +37,7 @@ public class CreateAccoutFragment extends Fragment {
         editAccountPhone = view.findViewById(R.id.edt_account_phone);
         editAccountAddress = view.findViewById(R.id.edt_account_address);
         editAccountPassword = view.findViewById(R.id.edt_account_password);
-        editAccountRePassword = view.findViewById(R.id.edt_account_re_password);
-        radioUser = view.findViewById(R.id.ra_role_User);
-        radioAdmin = view.findViewById(R.id.ra_role_admin);
+        radioGroupRole = view.findViewById(R.id.ra_role);
         btnAddAccount = view.findViewById(R.id.btn_add_account);
         btnBack = view.findViewById(R.id.buttonBackToAccountManagementC);
     }
@@ -66,17 +64,16 @@ public class CreateAccoutFragment extends Fragment {
         String accountPhone = editAccountPhone.getText().toString().trim();
         String accountAddress = editAccountAddress.getText().toString().trim();
         String accountPassword = editAccountPassword.getText().toString().trim();
-        String accountRePassword = editAccountRePassword.getText().toString().trim();
         String roleName;
-        boolean isUserSelected = radioUser.isChecked();
+        int selectedRadioButtonId = radioGroupRole.getCheckedRadioButtonId();
 
-        if (isUserSelected){
+        if (selectedRadioButtonId == R.id.ra_role_User){
             roleName = "user";
         } else {
             roleName = "admin";
         }
 
-        if (validateInput(accountName, accountEmail, accountPhone, accountAddress, accountPassword, accountRePassword)) {
+        if (validateInput(accountName, accountEmail, accountPhone, accountAddress, accountPassword)) {
 
             User user = new User(accountName, accountEmail, accountPassword, roleName, accountAddress, accountPhone);
             UserService userService = UserService.getInstance(requireContext());
@@ -91,17 +88,13 @@ public class CreateAccoutFragment extends Fragment {
         }
     }
 
-    private boolean validateInput(String accountName, String accountEmail, String accountPhone, String accountAddress, String accountPassword, String accountRePassword) {
-        if (accountName.isEmpty() || accountEmail.isEmpty() || accountPhone.isEmpty() || accountAddress.isEmpty() || accountPassword.isEmpty() || accountRePassword.isEmpty()) {
+    private boolean validateInput(String accountName, String accountEmail, String accountPhone, String accountAddress, String accountPassword) {
+        if (accountName.isEmpty() || accountEmail.isEmpty() || accountPhone.isEmpty() || accountAddress.isEmpty() || accountPassword.isEmpty()) {
             showToast("All fields are required");
             return false;
         }
         if(accountPhone.length() != 10){
             showToast("* The phone number must have exactly 10 digits");
-            return false;
-        }
-        if(!accountRePassword.equals(accountPassword)){
-            showToast("The password not matching");
             return false;
         }
         return true;
@@ -113,7 +106,6 @@ public class CreateAccoutFragment extends Fragment {
         editAccountPhone.setText("");
         editAccountAddress.setText("");
         editAccountPassword.setText("");
-        editAccountRePassword.setText("");
     }
 
     private void showToast(String message) {
