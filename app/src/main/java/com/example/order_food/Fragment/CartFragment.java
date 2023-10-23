@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.order_food.Card.PopularFoodCard;
+import com.example.order_food.Config.PathDataForPreferences;
+import com.example.order_food.Config.StaticDefineForSystem;
 import com.example.order_food.R;
 import com.example.order_food.adapter.OrderCartAdapter;
-import com.example.order_food.adapter.PopularAdapter;
+import com.example.order_food.service.FoodService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +32,12 @@ public class CartFragment extends Fragment implements OrderCartAdapter.OnItemCha
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    // TODO: Rename and change types of parameters
+    private static final String ID = "ID";
+    private static final String ARG_PARAM2 = "param2";
+    private String userID;
+    private String mParam2;
 
-    private List<PopularFoodCard> orderCartCards = new ArrayList<>();
+    List<PopularFoodCard> orderCartCards = new ArrayList<>();
 
     public CartFragment() {
 
@@ -50,6 +55,7 @@ public class CartFragment extends Fragment implements OrderCartAdapter.OnItemCha
     public static CartFragment newInstance(String param1, String param2) {
         CartFragment fragment = new CartFragment();
         Bundle args = new Bundle();
+        args.putString(ID, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,6 +63,10 @@ public class CartFragment extends Fragment implements OrderCartAdapter.OnItemCha
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            userID = getArguments().getString(ID);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -66,24 +76,28 @@ public class CartFragment extends Fragment implements OrderCartAdapter.OnItemCha
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
-        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12, 1);
-        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15,2);
-        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20,3);
+//        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12, 1);
+//        PopularFoodCard food2 = new PopularFoodCard(2,R.drawable.discount,"Food 2",15,2);
+//        PopularFoodCard food3 = new PopularFoodCard(3,R.drawable.discount2,"Food 3",20,3);
+//
+//        orderCartCards.clear();
+//        orderCartCards.add(food1);
+//        orderCartCards.add(food2);
+//        orderCartCards.add(food3);
+        assert getArguments() != null;
+        orderCartCards = PathDataForPreferences.getOrderCart(userID);
 
-        orderCartCards.clear();
-        orderCartCards.add(food1);
-        orderCartCards.add(food2);
-        orderCartCards.add(food3);
+        orderCartCards = getFoodByListOfID(orderCartCards);
 
         RecyclerView recView = view.findViewById(R.id.rec_order_cart_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        OrderCartAdapter adapter = new OrderCartAdapter(orderCartCards);
+        OrderCartAdapter adapter = new OrderCartAdapter(orderCartCards, userID, getContext());
         adapter.setOnItemChangeListener(this);
         recView.setAdapter(adapter);
 
         float total = 0;
         for(PopularFoodCard orderCartCard: orderCartCards){
-            total = total +(orderCartCard.getFoodImage() * orderCartCard.getQuantity());
+            total = total +(orderCartCard.getFoodPrice() * orderCartCard.getQuantity());
         }
         TextView textView = view.findViewById(R.id.food_order_cart_total);
         textView.setText(total+"$");
@@ -95,7 +109,11 @@ public class CartFragment extends Fragment implements OrderCartAdapter.OnItemCha
     @Override
     public void onListChange(String variable) {
         TextView textView = requireView().findViewById(R.id.food_order_cart_total);
-        textView.setText(variable+"$");
+        textView.setText(variable+ "$");
     }
-
+    private List<PopularFoodCard> getFoodByListOfID(List<PopularFoodCard> ids) {
+        // Retrieve all food items from the database using FoodService
+        // You may want to run this on a background thread or use LiveData for better performance
+        return FoodService.getInstance(requireContext()).getFoodItemsByListOfID(ids);
+    }
 }
