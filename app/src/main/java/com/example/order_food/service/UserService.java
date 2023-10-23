@@ -64,4 +64,8 @@ public class UserService {
     public int getUserCount() {
         return appDatabase.userDao().getUserCount();
     }
+    public User getUserByEmail(String email){
+        User user = appDatabase.userDao().getUserByEmail(email);
+        return user;
+    }
 }
