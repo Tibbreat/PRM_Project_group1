@@ -32,23 +32,25 @@ public class EditAccoutFragment extends Fragment {
         editAccountAddress = view.findViewById(R.id.edt_account_address_update);
         editAccountPassword = view.findViewById(R.id.edt_account_password_update);
         radioGroupRole = view.findViewById(R.id.ra_role_update);
-
         btnUpdateAccount = view.findViewById(R.id.btn_update_account);
-        btnBack = view.findViewById(R.id.buttonBackToAccountManagementC);
+        btnBack = view.findViewById(R.id.buttonBackToAccountList);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_account, container, false);
         initUI(view);
-        int userId = -1;
+        int userId;
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            bundle.getInt("userId", -1)
+            userId = bundle.getInt("userId", -1);
+        } else {
+            userId = -1;
         }
 
-        if (userId == -1){
+
+        if (userId == -1) {
             Toast.makeText(requireContext(), "Connect Error!!", Toast.LENGTH_SHORT).show();
         } else {
             UserService userService = UserService.getInstance(requireContext());
@@ -59,18 +61,14 @@ public class EditAccoutFragment extends Fragment {
             editAccountPhone.setText(user.getPhone());
             editAccountAddress.setText(user.getAddress());
             editAccountPassword.setText(user.getPassword());
-            int selectedRadioButtonId;
-            if (user.getRole().equals("user")){
-                selectedRadioButtonId = R.id.ra_role_user_update;
-            } else {
-                selectedRadioButtonId = R.id.ra_role_admin_update;
-            }
+
+            int selectedRadioButtonId = user.getRole().equals("user") ? R.id.ra_role_user_update : R.id.ra_role_admin_update;
             radioGroupRole.check(selectedRadioButtonId);
         }
 
+        btnUpdateAccount.setOnClickListener(v -> update(userId));
 
-        btnUpdateAccount.setOnClickListener(v -> update());
-        btnBack.setOnClickListener(v -> replaceFragment(new AccountManagementFragment()));
+        btnBack.setOnClickListener(v -> replaceFragment(new ViewListAccoutsFragment()));
 
         return view;
     }
@@ -80,22 +78,21 @@ public class EditAccoutFragment extends Fragment {
         transaction.commit();
     }
 
-    private void update() {
-        String accountEmail = editAccountEmail.getText().toString().trim();
-        String accountPassword = editAccountPassword.getText().toString().trim();
+    private void update(int userId) {
         String roleName;
         int selectedRadioButtonId = radioGroupRole.getCheckedRadioButtonId();
 
-        if (selectedRadioButtonId == R.id.ra_role_User){
+        if (selectedRadioButtonId == R.id.ra_role_user_update) {
             roleName = "user";
         } else {
             roleName = "admin";
         }
 
+
         UserService userService = UserService.getInstance(requireContext());
 
-        boolean isUpdated = userService.update(user);
-        if (isUpdated) {
+        int isUpdated = userService.updateRole(userId, roleName);
+        if (isUpdated == 1) {
             Toast.makeText(requireContext(), "Account update successfully", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(requireContext(), "Failed to update account", Toast.LENGTH_SHORT).show();

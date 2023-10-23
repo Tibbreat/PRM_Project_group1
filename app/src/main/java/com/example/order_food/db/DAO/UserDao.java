@@ -50,4 +50,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM user WHERE id = :id LIMIT 1")
     User getUserById(int id);
+
+    @Query("UPDATE user set role=:role where id=:userId")
+    int updateRole(int userId,String role);
 }
