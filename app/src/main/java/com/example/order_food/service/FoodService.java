@@ -72,7 +72,7 @@ public class FoodService {
             id.setFoodName(food.getFoodName());
             id.setFoodImage(food.getImageUri());
             try {
-                id.setFoodPrice(Float.parseFloat(food.getFoodPrice()));
+                id.setFoodPrice(food.getFoodPrice());
             } catch (Exception e) {
                 Log.d("getFoodBuId_fromDB", Objects.requireNonNull(e.getMessage()));
                 return new ArrayList<>();
