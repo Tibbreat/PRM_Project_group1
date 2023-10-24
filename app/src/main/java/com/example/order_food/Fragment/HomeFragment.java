@@ -1,35 +1,28 @@
 package com.example.order_food.Fragment;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
 import com.example.order_food.adapter.PopularAdapter;
 import com.example.order_food.db.entity.Food;
 import com.example.order_food.service.FoodService;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,21 +32,20 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    private static final String ID = "ID";
-    private static final String ARG_PARAM2 = "param2";
+
     private String userID;
-    private String mParam2;
+
     List<Food> foods = new ArrayList<>();
+    SharedPreferences preferences;
     boolean isScrolling = false;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    public static HomeFragment newInstance(String param1) {
+    public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putString(ID, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,11 +53,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-            userID = getArguments().getString(ID);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        preferences = getActivity().getSharedPreferences("account", Context.MODE_PRIVATE);
+        userID = preferences.getString("id","");
     }
 
     @Override

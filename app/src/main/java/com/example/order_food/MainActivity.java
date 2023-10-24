@@ -5,11 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,7 +17,6 @@ import com.example.order_food.Fragment.HistoryFragment;
 import com.example.order_food.Fragment.HomeFragment;
 import com.example.order_food.Fragment.ProfileFragment;
 import com.example.order_food.Fragment.SearchFragment;
-import com.example.order_food.adapter.OrderCartAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -46,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shared_pref = getSharedPreferences("account",MODE_PRIVATE);
         String userId = shared_pref.getString("id","");
 
-        homeFragment = HomeFragment.newInstance(userId);
-        cartFragment = CartFragment.newInstance(userId,null);
-        searchFragment = SearchFragment.newInstance(userId,null);
+        homeFragment = HomeFragment.newInstance();
+        cartFragment = CartFragment.newInstance();
+        searchFragment = SearchFragment.newInstance();
         historyFragment = HistoryFragment.newInstance(userId,null);
         profileFragment = ProfileFragment.newInstance();
         favoriteFragment = FavoriteFragment.newInstance(userId, null);
