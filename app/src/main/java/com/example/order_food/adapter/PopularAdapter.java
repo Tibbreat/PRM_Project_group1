@@ -21,37 +21,35 @@ import java.util.List;
 
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularHolder> {
     private static final String TAG = "MyActivity";
-
+    private String userID;
     private IclickItemFood ilickItemFood;
-    public interface IclickItemFood {
-        void getFoodDetail(Food food);
-    }
 
-    public PopularAdapter(IclickItemFood ilickItemFood) {
-        this.ilickItemFood = ilickItemFood;
+    public interface IclickItemFood {
+        void getFoodDetail(Food food, String userID);
     }
 
     List<Food> foods;
     private Context context;
 
-    public PopularAdapter(Context context,List<Food> foods, IclickItemFood iclickItemFood) {
+    public PopularAdapter(Context context, String userID, List<Food> foods, IclickItemFood iclickItemFood) {
         this.context = context;
         this.foods = foods;
         this.ilickItemFood = iclickItemFood;
+        this.userID = userID;
     }
 
     @NonNull
     @Override
     public PopularAdapter.PopularHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.popular_item,parent,false);
+                .inflate(R.layout.popular_item, parent, false);
         return new PopularHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PopularAdapter.PopularHolder holder, int position) {
 
-        final  Food food = foods.get(position);
+        final Food food = foods.get(position);
         holder.food_p_name.setText(food.getFoodName());
         holder.food_p_price.setText(food.getFoodPrice() + "");
         holder.food_p_txt_remain.setText("remain: " + food.getFoodQuantity());
@@ -62,12 +60,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularH
         } catch (Exception e) {
             e.printStackTrace();
         }
-        holder.btn_viewDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ilickItemFood.getFoodDetail(food);
-            }
-        });
+        holder.btn_viewDetail.setOnClickListener(view -> ilickItemFood.getFoodDetail(food, userID));
     }
 
     @Override
@@ -76,7 +69,6 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularH
     }
 
     public static class PopularHolder extends RecyclerView.ViewHolder {
-
         ImageView food_p_view;
         TextView food_p_name;
         TextView food_p_price;

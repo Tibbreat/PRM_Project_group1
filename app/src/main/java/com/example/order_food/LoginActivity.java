@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         UserService userService = UserService.getInstance(LoginActivity.this);
         User user = userService.getUser(usn,usp);
 
+
         if(user != null){
             Intent newIntent;
             if(user.getRole().equals("admin")){
@@ -74,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     User user = userService.getUser(email,password);
                     if(user != null){
+                        editor.putString("id",user.id+"");
                         editor.putString("email",email);
                         editor.putString("password",password);
                         editor.putString("address",user.address);

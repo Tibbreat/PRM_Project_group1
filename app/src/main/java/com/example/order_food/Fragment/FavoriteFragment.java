@@ -22,11 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class  FavoriteFragment extends Fragment {
-
+    private static final String ID = "ID";
+    private static final String ARG_PARAM2 = "param2";
+    private String userID;
+    private String mParam2;
     List<PopularFoodCard> foods = new ArrayList<>();
-    public static FavoriteFragment newInstance() {
+    public static FavoriteFragment newInstance(String param1, String param2) {
         FavoriteFragment fragment = new FavoriteFragment();
         Bundle args = new Bundle();
+        args.putString(ID, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,6 +38,10 @@ public class  FavoriteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            userID = getArguments().getString(ID);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
@@ -42,18 +50,18 @@ public class  FavoriteFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
 
-        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12);
-        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15);
-        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20);
-
-        foods.clear();
-        foods.add(food1);
-        foods.add(food2);
-        foods.add(food3);
+//        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12);
+//        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15);
+//        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20);
+//
+//        foods.clear();
+//        foods.add(food1);
+//        foods.add(food2);
+//        foods.add(food3);
 
         RecyclerView recView = view.findViewById(R.id.rec_favorite_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new FavoriteCartAdapter(foods));
+        recView.setAdapter(new FavoriteCartAdapter(foods, userID));
 
         return view;
     }

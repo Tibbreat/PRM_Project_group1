@@ -35,11 +35,11 @@ public class SearchFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ID = "ID";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String userID;
     private String mParam2;
     List<Food> foods = new ArrayList<>();
 
@@ -52,15 +52,15 @@ public class SearchFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param userID Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment SearchFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
+    public static SearchFragment newInstance(String userID, String param2) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putString(ID, userID);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -70,7 +70,7 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            userID = getArguments().getString(ID);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -86,18 +86,16 @@ public class SearchFragment extends Fragment {
 
         RecyclerView recView = view.findViewById(R.id.rec_food_search);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(requireContext(), foods, new PopularAdapter.IclickItemFood() {
-            @Override
-            public void getFoodDetail(Food food) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("food", food);
-                FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
-                foodDetailFragment.setArguments(bundle);
+        recView.setAdapter(new PopularAdapter(requireContext(), userID, foods, (food, id) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("food", food);
+            bundle.putSerializable("userID", id);
+            FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
+            foodDetailFragment.setArguments(bundle);
 
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
-                transaction.commit();
-            }
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
+            transaction.commit();
         }));
         EditText search = view.findViewById(R.id.edt_search_value);
         ((Button)view.findViewById(R.id.btn_search)).setOnClickListener(new View.OnClickListener() {

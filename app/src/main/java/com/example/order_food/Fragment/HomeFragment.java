@@ -39,22 +39,21 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
+    private static final String ID = "ID";
+    private static final String ARG_PARAM2 = "param2";
+    private String userID;
+    private String mParam2;
     List<Food> foods = new ArrayList<>();
-
-
     boolean isScrolling = false;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-
-
-
-    public static HomeFragment newInstance() {
+    public static HomeFragment newInstance(String param1) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
+        args.putString(ID, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,6 +61,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+
+            userID = getArguments().getString(ID);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
@@ -83,20 +87,20 @@ public class HomeFragment extends Fragment {
         foods.clear();
         foods.addAll(allPopularFoods);
 
+
         RecyclerView recView = view.findViewById(R.id.rec_popular_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(requireContext(), foods, new PopularAdapter.IclickItemFood() {
-            @Override
-            public void getFoodDetail(Food food) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("food", food);
-                FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
-                foodDetailFragment.setArguments(bundle);
 
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
-                transaction.commit();
-            }
+        recView.setAdapter(new PopularAdapter(requireContext(), userID, foods, (food, id) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("food", food);
+            bundle.putSerializable("userID", id);
+            FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
+            foodDetailFragment.setArguments(bundle);
+
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
+            transaction.commit();
         }));
 
         TextView btnNew = view.findViewById(R.id.btn_home_new);

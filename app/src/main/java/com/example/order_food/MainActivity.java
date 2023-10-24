@@ -36,19 +36,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FragmentManager fragmentManager;
 
     FragmentTransaction frag_tran;
+    SharedPreferences shared_pref;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        shared_pref = getSharedPreferences("account",MODE_PRIVATE);
+        String userId = shared_pref.getString("id","");
 
-        homeFragment = HomeFragment.newInstance();
-        cartFragment = CartFragment.newInstance(null,null);
-        searchFragment = SearchFragment.newInstance(null,null);
-        historyFragment = HistoryFragment.newInstance(null,null);
+        homeFragment = HomeFragment.newInstance(userId);
+        cartFragment = CartFragment.newInstance(userId,null);
+        searchFragment = SearchFragment.newInstance(userId,null);
+        historyFragment = HistoryFragment.newInstance(userId,null);
         profileFragment = ProfileFragment.newInstance();
-        favoriteFragment = FavoriteFragment.newInstance();
+        favoriteFragment = FavoriteFragment.newInstance(userId, null);
 
         fragmentManager = getSupportFragmentManager();
 
