@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         homeFragment = HomeFragment.newInstance(userId);
         cartFragment = CartFragment.newInstance(userId,null);
-        searchFragment = SearchFragment.newInstance(null,null);
+        searchFragment = SearchFragment.newInstance(userId,null);
         historyFragment = HistoryFragment.newInstance(userId,null);
         profileFragment = ProfileFragment.newInstance();
         favoriteFragment = FavoriteFragment.newInstance(userId, null);

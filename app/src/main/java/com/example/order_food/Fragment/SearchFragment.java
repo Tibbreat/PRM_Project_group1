@@ -86,19 +86,16 @@ public class SearchFragment extends Fragment {
 
         RecyclerView recView = view.findViewById(R.id.rec_food_search);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new PopularAdapter(requireContext(), userID, foods, new PopularAdapter.IclickItemFood() {
-            @Override
-            public void getFoodDetail(Food food, String id) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("food", food);
-                bundle.putSerializable("userID", id);
-                FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
-                foodDetailFragment.setArguments(bundle);
+        recView.setAdapter(new PopularAdapter(requireContext(), userID, foods, (food, id) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("food", food);
+            bundle.putSerializable("userID", id);
+            FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
+            foodDetailFragment.setArguments(bundle);
 
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
-                transaction.commit();
-            }
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragmentContainerView, foodDetailFragment);
+            transaction.commit();
         }));
         EditText search = view.findViewById(R.id.edt_search_value);
         ((Button)view.findViewById(R.id.btn_search)).setOnClickListener(new View.OnClickListener() {

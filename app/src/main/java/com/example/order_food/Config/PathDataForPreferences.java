@@ -21,7 +21,6 @@ public class PathDataForPreferences {
         if (orderCartString.isEmpty()) {
             return orderCart;
         }
-        Log.d("image", "addnew Cart: "+ orderCartString+ "dddddd");
         PopularFoodCard orderCartEach;
         String[] object = orderCartString.split(seperateInfor);
         String[] subObject;
@@ -42,10 +41,9 @@ public class PathDataForPreferences {
     }
 
     public static void addNewOrderCart(String userId, int foodId) {
-        if (userId.isEmpty() || foodId==0) {
+        if (userId==null || userId.isEmpty() || foodId==0) {
             return ;
         }
-        Log.d("image", "addnew Cart: "+ userId);
         List<PopularFoodCard> orderCart = PathDataForPreferences.getOrderCart(userId);
         boolean findOrder = true;
         for(PopularFoodCard card: orderCart){
@@ -55,23 +53,19 @@ public class PathDataForPreferences {
                 break;
             }
         }
-        Log.d("image", "addnew Cart: "+ orderCart);
         if(findOrder){
             orderCart.add(new PopularFoodCard(foodId, 1));
         }
-        Log.d("image", "addnew Cart: "+ orderCart);
         PathDataForPreferences.updateOrderCart(orderCart, userId);
     }
 
     public static void updateOrderCart(List<PopularFoodCard> popularFoodCards, String userId) {
         SharedPreferences preferences = MainApplication.getSharedPreferences();
 
-        Log.d("image", "addnew Cart: "+ popularFoodCards);
         StringBuilder stringBuilder = new StringBuilder();
         for(PopularFoodCard card: popularFoodCards){
             stringBuilder.append(card.getId()).append(mapInfor).append(card.getQuantity()).append(seperateInfor);
         }
-        Log.d("image", "addnew Cart: "+ stringBuilder.toString());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(userId, stringBuilder.toString());
         editor.apply();
