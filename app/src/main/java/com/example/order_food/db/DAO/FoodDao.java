@@ -17,6 +17,8 @@ public interface FoodDao {
 
     @Query("SELECT * FROM Food")
     List<Food> getAllFoods();
+    @Query("SELECT * FROM Food WHERE id= :id")
+    Food getFoodById(int id);
 
     @Delete
     void deleteFood(Food food);

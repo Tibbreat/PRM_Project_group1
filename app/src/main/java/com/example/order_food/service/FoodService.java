@@ -1,12 +1,15 @@
 package com.example.order_food.service;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.db.AppDatabase;
 import com.example.order_food.db.entity.Food;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FoodService {
     private static FoodService instance;
@@ -58,7 +61,24 @@ public class FoodService {
         return appDatabase.foodDao().getFoodCount();
     }
     public List<PopularFoodCard>  getFoodItemsByListOfID(List<PopularFoodCard> ids){
-        return null;
+        Food food;
+        for(PopularFoodCard id: ids){
+            try {
+                food = appDatabase.foodDao().getFoodById(id.getId());
+            } catch (Exception e) {
+                Log.d("getFoodBuId_fromDB", Objects.requireNonNull(e.getMessage()));
+                return new ArrayList<>();
+            }
+            id.setFoodName(food.getFoodName());
+            id.setFoodImage(food.getImageUri());
+            try {
+                id.setFoodPrice(Float.parseFloat(food.getFoodPrice()));
+            } catch (Exception e) {
+                Log.d("getFoodBuId_fromDB", Objects.requireNonNull(e.getMessage()));
+                return new ArrayList<>();
+            }
+        }
+        return ids;
     }
 }
 

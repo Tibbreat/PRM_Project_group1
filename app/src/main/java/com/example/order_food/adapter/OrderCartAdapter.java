@@ -56,6 +56,7 @@ public class OrderCartAdapter extends RecyclerView.Adapter<OrderCartAdapter.Orde
                 holder.food_c_view.setImageBitmap(bitmap);
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.d("image", "onCreateView: " + e);
             }
             holder.food_c_name.setText(orderCartCards.get(position).getFoodName());
             holder.food_c_price.setText(orderCartCards.get(position).getFoodPrice() + "");

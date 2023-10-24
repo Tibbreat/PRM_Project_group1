@@ -67,7 +67,7 @@ public class FavoriteCartAdapter extends RecyclerView.Adapter<FavoriteCartAdapte
             });
             (itemView.findViewById(R.id.add_to_cart_favorite)).setOnClickListener(view -> {
                 int foodId = favoriteFoodCart.get(getAdapterPosition()).getId();
-                PathDataForPreferences.addNewOrderCart(userId, foodId+"");
+                PathDataForPreferences.addNewOrderCart(userId, foodId);
             });
         }
     }

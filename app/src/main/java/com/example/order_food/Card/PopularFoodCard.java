@@ -1,7 +1,5 @@
 package com.example.order_food.Card;
 
-import android.net.Uri;
-
 public class PopularFoodCard {
     private int id;
     private String foodImage;
@@ -21,6 +19,10 @@ public class PopularFoodCard {
         this.foodImage = foodImage;
         this.foodName = foodName;
         this.foodPrice = foodPrice;
+        this.quantity = quantity;
+    }
+    public PopularFoodCard(int id, int quantity) {
+        this.id = id;
         this.quantity = quantity;
     }
 

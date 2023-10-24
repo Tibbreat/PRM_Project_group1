@@ -27,9 +27,10 @@ public class  FavoriteFragment extends Fragment {
     private String userID;
     private String mParam2;
     List<PopularFoodCard> foods = new ArrayList<>();
-    public static FavoriteFragment newInstance() {
+    public static FavoriteFragment newInstance(String param1, String param2) {
         FavoriteFragment fragment = new FavoriteFragment();
         Bundle args = new Bundle();
+        args.putString(ID, param1);
         fragment.setArguments(args);
         return fragment;
     }
