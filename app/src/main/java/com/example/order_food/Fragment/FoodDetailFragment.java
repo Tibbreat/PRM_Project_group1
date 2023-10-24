@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.order_food.Config.PathDataForPreferences;
 import com.example.order_food.R;
@@ -67,6 +68,11 @@ public class FoodDetailFragment extends Fragment {
                 ((TextView) view.findViewById(R.id.btn_add)).setOnClickListener(newView -> {
                     assert userID != null;
                     PathDataForPreferences.addNewOrderCart(userID, food.getId());
+                    CartFragment cartFragment = CartFragment.newInstance();
+
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainerView, cartFragment);
+                    transaction.commit();
                 });
             }
         }
