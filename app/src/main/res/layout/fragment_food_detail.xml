@@ -6,6 +6,16 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/favorite_icons2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_add"
+        app:layout_constraintTop_toTopOf="@+id/btn_add"
+        app:srcCompat="@drawable/heart2red" />
+
+    <ImageView
         android:id="@+id/img_food"
         android:layout_width="365dp"
         android:layout_height="190dp"
@@ -18,8 +28,8 @@
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_width="260dp"
+        android:layout_height="33dp"
         android:layout_marginTop="16dp"
         android:textAlignment="center"
         android:textSize="24sp"
