@@ -26,7 +26,7 @@ public class CreateFoodFragment extends Fragment {
     private ImageView imageViewFood;
     private Button btnChooseImage, btnAddFood;
     private ImageButton btnBack;
-    private EditText editFoodName, editFoodPrice, editFoodQuantity, editFoodDescription, editFoodIngredients;
+    private EditText editFoodName, editFoodPrice, editFoodDescription, editFoodIngredients;
     private Uri selectedImageUri;
 
     public CreateFoodFragment() {
@@ -37,7 +37,6 @@ public class CreateFoodFragment extends Fragment {
         btnChooseImage = view.findViewById(R.id.btn_choose_image);
         editFoodName = view.findViewById(R.id.edit_food_name);
         editFoodPrice = view.findViewById(R.id.edit_food_price);
-        editFoodQuantity = view.findViewById(R.id.edit_food_quantity);
         editFoodDescription = view.findViewById(R.id.edit_food_description);
         editFoodIngredients = view.findViewById(R.id.edit_food_ingredients);
         btnAddFood = view.findViewById(R.id.btn_add_food);
@@ -82,11 +81,10 @@ public class CreateFoodFragment extends Fragment {
     private void insert() {
         String foodName = editFoodName.getText().toString().trim();
         String foodPrice = editFoodPrice.getText().toString().trim();
-        String foodQuantity = editFoodQuantity.getText().toString().trim();
         String foodDescription = editFoodDescription.getText().toString().trim();
         String foodIngredients = editFoodIngredients.getText().toString().trim();
 
-        if (validateInput(foodName, foodPrice, foodQuantity, foodDescription, foodIngredients)) {
+        if (validateInput(foodName, foodPrice, foodDescription, foodIngredients)) {
             // Save the image to app's internal storage
             String imageFileName = null;
             Uri imageUri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/drawable/eating");
@@ -95,9 +93,10 @@ public class CreateFoodFragment extends Fragment {
             } else {
                 imageFileName = saveImageToInternalStorage(selectedImageUri);
             }
+            Float parsePrice = Float.parseFloat(foodPrice);
 
             if (imageFileName != null) {
-                Food food = new Food(foodName, foodPrice, foodQuantity, foodDescription, foodIngredients, imageFileName);
+                Food food = new Food(foodName, parsePrice, foodDescription, foodIngredients, imageFileName);
                 FoodService foodService = FoodService.getInstance(requireContext());
                 boolean insertionResult = foodService.insert(food);
 
@@ -144,21 +143,20 @@ public class CreateFoodFragment extends Fragment {
     }
 
 
-    private boolean validateInput(String foodName, String foodPrice, String foodQuantity, String foodDescription, String foodIngredients) {
-        if (foodName.isEmpty() || foodPrice.isEmpty() || foodQuantity.isEmpty() || foodDescription.isEmpty() || foodIngredients.isEmpty()) {
+    private boolean validateInput(String foodName, String foodPrice, String foodDescription, String foodIngredients) {
+        if (foodName.isEmpty() || foodPrice.isEmpty() || foodDescription.isEmpty() || foodIngredients.isEmpty()) {
             showToast("All fields are required");
             return false;
         }
         try {
-            double price = Double.parseDouble(foodPrice);
-            int quantity = Integer.parseInt(foodQuantity);
+            Float price = Float.parseFloat(foodPrice);
 
-            if (price <= 0 || quantity <= 0) {
-                showToast("Price and quantity must be positive");
+            if (price <= 0) {
+                showToast("Price must be positive");
                 return false;
             }
         } catch (NumberFormatException e) {
-            showToast("Invalid price or quantity format");
+            showToast("Invalid price format");
             return false;
         }
 
@@ -168,7 +166,6 @@ public class CreateFoodFragment extends Fragment {
     private void clearFields() {
         editFoodName.setText("");
         editFoodPrice.setText("");
-        editFoodQuantity.setText("");
         editFoodDescription.setText("");
         editFoodIngredients.setText("");
         imageViewFood.setImageResource(R.drawable.placeholder);

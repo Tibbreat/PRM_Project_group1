@@ -52,7 +52,6 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularH
         final Food food = foods.get(position);
         holder.food_p_name.setText(food.getFoodName());
         holder.food_p_price.setText(food.getFoodPrice() + "");
-        holder.food_p_txt_remain.setText("remain: " + food.getFoodQuantity());
         try {
             String imageFileName = foods.get(position).getImageUri(); // This should be the file path
             Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir() + "/" + imageFileName);
@@ -82,7 +81,6 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.PopularH
             food_p_view = itemView.findViewById(R.id.food_popular_image);
             food_p_name = itemView.findViewById(R.id.food_popular_name);
             food_p_price = itemView.findViewById(R.id.food_popular_price);
-            food_p_txt_remain = itemView.findViewById(R.id.txt_remain);
             btn_viewDetail = itemView.findViewById(R.id.add_to_cart_popular);
         }
     }
