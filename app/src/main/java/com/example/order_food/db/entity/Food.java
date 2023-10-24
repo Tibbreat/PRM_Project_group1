@@ -11,8 +11,7 @@ public class Food implements Serializable {
     private int id;
 
     private String foodName;
-    private String foodPrice;
-    private String foodQuantity;
+    private float foodPrice;
     private String foodDescription;
     private String foodIngredients;
     private String imageUri;
@@ -20,10 +19,9 @@ public class Food implements Serializable {
     public Food() {
     }
 
-    public Food(String foodName, String foodPrice, String foodQuantity, String foodDescription, String foodIngredients, String imageUri) {
+    public Food(String foodName, float foodPrice, String foodDescription, String foodIngredients, String imageUri) {
         this.foodName = foodName;
         this.foodPrice = foodPrice;
-        this.foodQuantity = foodQuantity;
         this.foodDescription = foodDescription;
         this.foodIngredients = foodIngredients;
         this.imageUri = imageUri;
@@ -45,20 +43,12 @@ public class Food implements Serializable {
         this.foodName = foodName;
     }
 
-    public String getFoodPrice() {
+    public float getFoodPrice() {
         return foodPrice;
     }
 
-    public void setFoodPrice(String foodPrice) {
+    public void setFoodPrice(float foodPrice) {
         this.foodPrice = foodPrice;
-    }
-
-    public String getFoodQuantity() {
-        return foodQuantity;
-    }
-
-    public void setFoodQuantity(String foodQuantity) {
-        this.foodQuantity = foodQuantity;
     }
 
     public String getFoodDescription() {

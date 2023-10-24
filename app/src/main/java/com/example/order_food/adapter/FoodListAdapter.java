@@ -41,7 +41,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
 
         holder.foodNameTextView.setText("Food's name: " + food.getFoodName());
         holder.foodPriceTextView.setText("Price: $" + food.getFoodPrice());
-        holder.foodQuantityTextView.setText("Quantity: " + food.getFoodQuantity());
 
         try {
             String imageFileName = food.getImageUri(); // This should be the file path
@@ -69,7 +68,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
     static class FoodViewHolder extends RecyclerView.ViewHolder {
         TextView foodNameTextView;
         TextView foodPriceTextView;
-        TextView foodQuantityTextView;
         ImageView foodImageView;
 
         ImageButton btnDelete;
@@ -78,7 +76,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.FoodVi
             super(itemView);
             foodNameTextView = itemView.findViewById(R.id.food_name);
             foodPriceTextView = itemView.findViewById(R.id.food_price);
-            foodQuantityTextView = itemView.findViewById(R.id.food_quantity);
             foodImageView = itemView.findViewById(R.id.food_popular_image);
             btnDelete = itemView.findViewById(R.id.btn_delete);
 

@@ -46,18 +46,6 @@
                 app:layout_constraintTop_toTopOf="@+id/food_popular_image"
                 app:layout_constraintVertical_bias="0.381" />
 
-            <TextView
-                android:id="@+id/food_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="Food Quantity"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/food_popular_image"
-                app:layout_constraintStart_toEndOf="@+id/food_popular_image"
-                app:layout_constraintTop_toTopOf="@+id/food_popular_image"
-                app:layout_constraintVertical_bias="0.986" />
-
             <ImageButton
                 android:id="@+id/btn_delete"
                 android:layout_width="32dp"
