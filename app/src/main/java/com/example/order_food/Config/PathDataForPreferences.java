@@ -61,12 +61,17 @@ public class PathDataForPreferences {
 
     public static void updateOrderCart(List<PopularFoodCard> popularFoodCards, String userId) {
         SharedPreferences preferences = MainApplication.getSharedPreferences();
+        SharedPreferences.Editor editor = preferences.edit();
+        if(popularFoodCards.size()==0){
+            editor.putString(userId, "");
+            editor.apply();
+            return;
+        }
 
         StringBuilder stringBuilder = new StringBuilder();
         for(PopularFoodCard card: popularFoodCards){
             stringBuilder.append(card.getId()).append(mapInfor).append(card.getQuantity()).append(seperateInfor);
         }
-        SharedPreferences.Editor editor = preferences.edit();
         editor.putString(userId, stringBuilder.toString());
         editor.apply();
     }

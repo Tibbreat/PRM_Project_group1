@@ -9,13 +9,15 @@ import androidx.room.TypeConverters;
 
 import com.example.order_food.db.DAO.FoodDao;
 import com.example.order_food.db.DAO.OrderDao;
+import com.example.order_food.db.DAO.OrderDetailDao;
 import com.example.order_food.db.DAO.UserDao;
 import com.example.order_food.db.entity.Food;
 import com.example.order_food.db.entity.Order;
+import com.example.order_food.db.entity.OrderDetail;
 import com.example.order_food.db.entity.User;
 import com.example.order_food.util.LocalDateConverter;
 
-@Database(entities = {User.class, Food.class, Order.class}, version = 4)
+@Database(entities = {User.class, Food.class, Order.class, OrderDetail.class}, version = 4)
 @TypeConverters(LocalDateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
@@ -33,4 +35,5 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract FoodDao foodDao();
 
     public abstract OrderDao orderDao();
+    public abstract OrderDetailDao orderDetailDao();
 }
