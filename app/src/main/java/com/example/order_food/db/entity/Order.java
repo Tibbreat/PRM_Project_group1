@@ -2,28 +2,24 @@ package com.example.order_food.db.entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.example.order_food.util.LocalDateConverter;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Entity
-@TypeConverters(LocalDateConverter.class)
+
 public class Order implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private LocalDate orderDate;
+    private String orderDate;
     private float total;
     private String status;
     private int userID;
-    private LocalDate shippedDate;
+    private String shippedDate;
 
     public Order() {
     }
 
-    public Order(int id, LocalDate orderDate, float total, String status, int userID, LocalDate shippedDate) {
+    public Order(int id, String orderDate, float total, String status, int userID, String shippedDate) {
         this.id = id;
         this.orderDate = orderDate;
         this.total = total;
@@ -40,11 +36,11 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getOrderDate() {
+    public String  getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDate orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -72,11 +68,11 @@ public class Order implements Serializable {
         this.userID = userID;
     }
 
-    public LocalDate getShippedDate() {
+    public String getShippedDate() {
         return shippedDate;
     }
 
-    public void setShippedDate(LocalDate shippedDate) {
+    public void setShippedDate(String shippedDate) {
         this.shippedDate = shippedDate;
     }
 }
