@@ -2,9 +2,11 @@ package com.example.order_food.service;
 
 import android.content.Context;
 
+import com.example.order_food.Card.OrderCard;
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.Config.StaticDefineForSystem;
 import com.example.order_food.db.AppDatabase;
+import com.example.order_food.db.DAO.OrderDao;
 import com.example.order_food.db.entity.Order;
 import com.example.order_food.db.entity.OrderDetail;
 
@@ -64,5 +66,27 @@ public class OrderService {
             return false;
         }
         return true;
+    }
+    public List<OrderCard> getListOfOrder(int userID){
+        List<OrderCard> ordersCards = new ArrayList<>();
+        List<Order>  orders;
+        try {
+            orders= appDatabase.orderDao().getOrderByUserID(userID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ordersCards;
+        }
+
+        OrderCard orderCard;
+        for(Order order: orders){
+            orderCard = new OrderCard();
+            orderCard.setId(order.getId());
+            orderCard.setOrderDate(order.getOrderDate());
+            orderCard.setStatus(order.getStatus());
+            orderCard.setTotal(order.getTotal());
+            orderCard.setShippedDate(order.getShippedDate());
+            ordersCards.add(orderCard);
+        }
+        return ordersCards;
     }
 }

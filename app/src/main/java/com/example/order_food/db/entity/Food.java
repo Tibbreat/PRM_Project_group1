@@ -9,7 +9,6 @@ import java.io.Serializable;
 public class Food implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     private String foodName;
     private float foodPrice;
     private String foodDescription;

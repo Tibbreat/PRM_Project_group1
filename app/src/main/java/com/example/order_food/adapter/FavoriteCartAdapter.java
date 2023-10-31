@@ -1,6 +1,9 @@
 package com.example.order_food.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,9 +25,11 @@ public class FavoriteCartAdapter extends RecyclerView.Adapter<FavoriteCartAdapte
 
     List<PopularFoodCard> favoriteFoodCart;
     String userId;
-    public FavoriteCartAdapter(List<PopularFoodCard> favoriteCart, String id){
+    Context context;
+    public FavoriteCartAdapter(List<PopularFoodCard> favoriteCart, String id, Context context){
         favoriteFoodCart = favoriteCart;
         this.userId = id;
+        this.context = context;
     }
 
     @NonNull
@@ -40,6 +45,14 @@ public class FavoriteCartAdapter extends RecyclerView.Adapter<FavoriteCartAdapte
         if(!favoriteFoodCart.isEmpty()){
             holder.food_c_id.setText(favoriteFoodCart.get(position).getId()+"");
             holder.food_c_view.setImageResource(1);
+            try {
+                String imageFileName = favoriteFoodCart.get(position).getFoodImage(); // This should be the file path
+                Bitmap bitmap = BitmapFactory.decodeFile(context.getFilesDir() + "/" + imageFileName);
+                holder.food_c_view.setImageBitmap(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("image", "onCreateView: " + e);
+            }
             holder.food_c_name.setText(favoriteFoodCart.get(position).getFoodName());
             holder.food_c_price.setText(favoriteFoodCart.get(position).getFoodPrice() + "");
         }
