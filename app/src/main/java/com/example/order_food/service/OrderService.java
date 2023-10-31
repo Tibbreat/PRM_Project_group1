@@ -15,7 +15,7 @@ import java.util.List;
 
 public class OrderService {
     private static OrderService instance;
-    private AppDatabase appDatabase;
+    private final AppDatabase appDatabase;
     private OrderService(Context context) {
         appDatabase = AppDatabase.getInstance(context);
     }
