@@ -35,4 +35,15 @@ public class FavoriteFood {
     public void setUserID(int userID) {
         this.userID = userID;
     }
+
+    public FavoriteFood(int productID, int userID) {
+        this.productID = productID;
+        this.userID = userID;
+    }
+
+    public FavoriteFood(int id, int productID, int userID) {
+        this.id = id;
+        this.productID = productID;
+        this.userID = userID;
+    }
 }
