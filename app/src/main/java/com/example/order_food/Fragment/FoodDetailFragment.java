@@ -9,13 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.order_food.Config.PathDataForPreferences;
 import com.example.order_food.R;
+import com.example.order_food.db.entity.FavoriteFood;
 import com.example.order_food.db.entity.Food;
+import com.example.order_food.service.FavoriteFoodService;
 
 import java.io.File;
 
@@ -74,9 +77,30 @@ public class FoodDetailFragment extends Fragment {
                     transaction.replace(R.id.fragmentContainerView, cartFragment);
                     transaction.commit();
                 });
+                ((ImageView) view.findViewById(R.id.btn_favicon_add)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        boolean check = checkFavFood(Integer.parseInt(userID), food.getId());
+                        Log.d("image", "check: "+check);
+                        if(check == false){
+                            insertFavFood(new FavoriteFood(food.getId(), Integer.parseInt(userID)));
+                            Toast.makeText(requireContext(), "add to favorite successfully", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(requireContext(), "already on your favorite", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         }
 
         return view;
+    }
+
+    public boolean checkFavFood(int uid, int pid){
+        return FavoriteFoodService.getInstance(requireContext()).checkFavFood(uid, pid);
+    }
+
+    public boolean insertFavFood(FavoriteFood favoriteFood){
+        return FavoriteFoodService.getInstance(requireContext()).insert(favoriteFood);
     }
 }
