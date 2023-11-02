@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class FoodService {
     private static FoodService instance;
-    private AppDatabase appDatabase;
+    private final AppDatabase appDatabase;
 
     private FoodService(Context context) {
         appDatabase = AppDatabase.getInstance(context);
@@ -83,7 +83,7 @@ public class FoodService {
     }
     public List<PopularFoodCard> getFavoriteFood(int userID){
         List<PopularFoodCard> popularFoodCards = new ArrayList<>();
-        List<FavoriteFood> favoriteFoods = appDatabase.favoriteDao().getFavFoodById(userID);
+        List<FavoriteFood> favoriteFoods = appDatabase.favoriteDao().getFavFoodByUserId(userID);
         if(favoriteFoods.size()==0){
             return popularFoodCards;
         }

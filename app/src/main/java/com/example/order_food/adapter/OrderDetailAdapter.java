@@ -1,6 +1,5 @@
 package com.example.order_food.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +16,9 @@ import java.util.List;
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailHolder> {
     List<PopularFoodCard> orderDetailCards;
     int orderID;
-    Context context;
-    public OrderDetailAdapter(List<PopularFoodCard> orderDetail, int orderID, Context context){
-        orderDetailCards = orderDetail;
+    public OrderDetailAdapter(List<PopularFoodCard> orderDetailCards, int orderID){
+        this.orderDetailCards = orderDetailCards;
         this.orderID = orderID;
-        this.context = context;
     }
     @NonNull
     @Override
@@ -33,7 +30,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     @Override
     public void onBindViewHolder(@NonNull OrderDetailHolder holder, int position) {
         holder.order_detail_name.setText(orderDetailCards.get(position).getFoodName());
-        holder.order_detail_quantity.setText(orderDetailCards.get(position).getQuantity());
+        holder.order_detail_quantity.setText(String.valueOf(orderDetailCards.get(position).getQuantity()));
     }
 
     @Override

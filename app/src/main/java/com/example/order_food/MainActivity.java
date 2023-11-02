@@ -1,13 +1,10 @@
 package com.example.order_food;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -32,72 +29,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FragmentManager fragmentManager;
 
     FragmentTransaction frag_tran;
-    SharedPreferences shared_pref;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        shared_pref = getSharedPreferences("account",MODE_PRIVATE);
-        String userId = shared_pref.getString("id","");
 
         homeFragment = HomeFragment.newInstance();
         cartFragment = CartFragment.newInstance();
         searchFragment = SearchFragment.newInstance();
-        historyFragment = HistoryFragment.newInstance(userId,null);
+        historyFragment = HistoryFragment.newInstance();
         profileFragment = ProfileFragment.newInstance();
-        favoriteFragment = FavoriteFragment.newInstance(userId, null);
+        favoriteFragment = FavoriteFragment.newInstance();
 
         fragmentManager = getSupportFragmentManager();
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if(id == R.id.home){
-                    frag_tran = fragmentManager.beginTransaction();
-                    frag_tran.replace(R.id.fragmentContainerView,homeFragment,"homeFragment");
-                    frag_tran.commit();
-                    return true;
-                }
-                else if(id == R.id.cart){
-                    frag_tran = fragmentManager.beginTransaction();
-                    frag_tran.replace(R.id.fragmentContainerView,cartFragment,"cartFragment");
-                    frag_tran.commit();
-                    return true;
-                }
-                else if(id == R.id.search){
-                    frag_tran = fragmentManager.beginTransaction();
-                    frag_tran.replace(R.id.fragmentContainerView,searchFragment,"searchFragment");
-                    frag_tran.commit();
-                    return true;
-                }
-                else if(id == R.id.history){
-                    frag_tran = fragmentManager.beginTransaction();
-                    frag_tran.replace(R.id.fragmentContainerView,historyFragment,"historyFragment");
-                    frag_tran.commit();
-                    return true;
-                }
-                else if(id == R.id.profile){
-                    frag_tran = fragmentManager.beginTransaction();
-                    frag_tran.replace(R.id.fragmentContainerView,profileFragment,"profileFragment");
-                    frag_tran.commit();
-                    return true;
-                }
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if(id == R.id.home){
+                frag_tran = fragmentManager.beginTransaction();
+                frag_tran.replace(R.id.fragmentContainerView,homeFragment,"homeFragment");
+                frag_tran.commit();
+                return true;
             }
+            else if(id == R.id.cart){
+                frag_tran = fragmentManager.beginTransaction();
+                frag_tran.replace(R.id.fragmentContainerView,cartFragment,"cartFragment");
+                frag_tran.commit();
+                return true;
+            }
+            else if(id == R.id.search){
+                frag_tran = fragmentManager.beginTransaction();
+                frag_tran.replace(R.id.fragmentContainerView,searchFragment,"searchFragment");
+                frag_tran.commit();
+                return true;
+            }
+            else if(id == R.id.history){
+                frag_tran = fragmentManager.beginTransaction();
+                frag_tran.replace(R.id.fragmentContainerView,historyFragment,"historyFragment");
+                frag_tran.commit();
+                return true;
+            }
+            else if(id == R.id.profile){
+                frag_tran = fragmentManager.beginTransaction();
+                frag_tran.replace(R.id.fragmentContainerView,profileFragment,"profileFragment");
+                frag_tran.commit();
+                return true;
+            }
+            return false;
         });
 
-        ((ImageView)findViewById(R.id.favorite_icons)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                frag_tran = fragmentManager.beginTransaction();
-                frag_tran.replace(R.id.fragmentContainerView,favoriteFragment,"favoriteFragment");
-                frag_tran.commit();
-            }
+        findViewById(R.id.favorite_icons).setOnClickListener(view -> {
+            frag_tran = fragmentManager.beginTransaction();
+            frag_tran.replace(R.id.fragmentContainerView,favoriteFragment,"favoriteFragment");
+            frag_tran.commit();
         });
     }
 

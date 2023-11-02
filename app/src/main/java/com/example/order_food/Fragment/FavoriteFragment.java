@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class  FavoriteFragment extends Fragment {
     String userID;
     FragmentTransaction frag_tran;
     List<PopularFoodCard> foods = new ArrayList<>();
-    public static FavoriteFragment newInstance(String param1, String param2) {
+    public static FavoriteFragment newInstance() {
         FavoriteFragment fragment = new FavoriteFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -36,6 +37,7 @@ public class  FavoriteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("favourite_fragment", "getInto onCreate favoriteFragment");
         preferences = getActivity().getSharedPreferences("account", Context.MODE_PRIVATE);
         userID = preferences.getString("id", "");
     }
@@ -54,11 +56,11 @@ public class  FavoriteFragment extends Fragment {
             frag_tran.replace(R.id.fragmentContainerView, HomeFragment.newInstance(), "homeFragment");
             frag_tran.commit();
         }
-        foods = FoodService.getInstance(getContext()).getFavoriteFood(id);
-
+        foods = FoodService.getInstance(requireContext()).getFavoriteFood(id);
+        Log.d("favourite_fragment", "getInto onCreateView get list of fav: "+foods.size());
         RecyclerView recView = view.findViewById(R.id.rec_favorite_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new FavoriteCartAdapter(foods, userID, getContext()));
+        recView.setAdapter(new FavoriteCartAdapter(foods, String.valueOf(userID), getContext(), getParentFragmentManager()));
 
         return view;
     }

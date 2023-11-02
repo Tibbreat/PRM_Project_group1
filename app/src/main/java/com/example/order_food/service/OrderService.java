@@ -6,7 +6,6 @@ import com.example.order_food.Card.OrderCard;
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.Config.StaticDefineForSystem;
 import com.example.order_food.db.AppDatabase;
-import com.example.order_food.db.DAO.OrderDao;
 import com.example.order_food.db.entity.Food;
 import com.example.order_food.db.entity.Order;
 import com.example.order_food.db.entity.OrderDetail;
@@ -42,7 +41,7 @@ public class OrderService {
         order.setTotal(total);
         order.setStatus(StaticDefineForSystem.ORDER_PENDING);
 
-        long newOrderId=-1;
+        long newOrderId;
         try {
             order.setUserID(Integer.parseInt(userID));
             newOrderId = appDatabase.orderDao().insert(order);
@@ -99,6 +98,11 @@ public class OrderService {
             return false;
         }
         order.setStatus(status);
+        if(status.equals(StaticDefineForSystem.ORDER_COMPLETE)){
+            Calendar calendar = Calendar.getInstance();
+            Date currentTime = calendar.getTime();
+            order.setShippedDate(String.valueOf(currentTime));
+        }
         try {
             appDatabase.orderDao().updateOrder(order);
         } catch (Exception e) {
@@ -109,7 +113,7 @@ public class OrderService {
     }
     public List<PopularFoodCard> getListOfOrderDetailByOrderID (int orderID){
         List<PopularFoodCard> popularFoodCards = new ArrayList<>();
-        List<OrderDetail> orderDetails = new ArrayList<>();
+        List<OrderDetail> orderDetails;
         try {
             orderDetails= appDatabase.orderDetailDao().getOrderDetailByOrderID(orderID);
         } catch (Exception e) {

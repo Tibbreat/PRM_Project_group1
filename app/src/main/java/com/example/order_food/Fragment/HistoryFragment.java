@@ -1,7 +1,5 @@
 package com.example.order_food.Fragment;
 
-import static com.example.order_food.R.id.rec_order_history;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,17 +9,16 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.order_food.Card.OrderCard;
 import com.example.order_food.R;
-import com.example.order_food.adapter.FavoriteCartAdapter;
 import com.example.order_food.adapter.OrderHistoryAdapter;
 import com.example.order_food.service.OrderService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +31,7 @@ public class HistoryFragment extends Fragment {
     SharedPreferences preferences;
     String userID;
     FragmentTransaction frag_tran;
-    List<OrderCard> orders = new ArrayList<>();
+    List<OrderCard> orders;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -51,6 +48,7 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("history_fragment", "getInto onCreate history Fragment");
         preferences = getActivity().getSharedPreferences("account", Context.MODE_PRIVATE);
         userID = preferences.getString("id", "");
     }
@@ -60,18 +58,26 @@ public class HistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history, container, false);
-        int id=-1;
+        Log.d("history_fragment", "getInto onCreateView history Fragment");
+        int id;
         try{
             id = Integer.parseInt(userID);
         }catch (Exception e) {
             frag_tran = getParentFragmentManager().beginTransaction();
             frag_tran.replace(R.id.fragmentContainerView, HomeFragment.newInstance(), "homeFragment");
             frag_tran.commit();
+            return view;
         }
+        Log.d("history_fragment", "getInto onCreateView history Fragment, get id successfully");
         orders = OrderService.getInstance(getContext()).getListOfOrder(id);
-        RecyclerView recView = view.findViewById(rec_order_history);
-        recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new OrderHistoryAdapter(orders, getContext()));
+        Log.d("history_fragment", "getInto onCreateView history Fragment, get order total "+orders.size());
+        try{
+            RecyclerView recView = view.findViewById(R.id.rec_order_history);
+            recView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            recView.setAdapter(new OrderHistoryAdapter(orders, getContext()));
+        }catch (Exception e){
+            Log.d("history_fragment", "getInto onCreateView history Fragment " + e.getMessage());
+        }
         return view;
     }
 }
