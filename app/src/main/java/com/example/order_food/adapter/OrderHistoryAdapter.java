@@ -1,21 +1,27 @@
 package com.example.order_food.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.order_food.Card.OrderCard;
 import com.example.order_food.Card.PopularFoodCard;
+import com.example.order_food.Config.PathDataForPreferences;
 import com.example.order_food.Config.StaticDefineForSystem;
+import com.example.order_food.Fragment.HomeFragment;
 import com.example.order_food.R;
+import com.example.order_food.db.entity.Order;
+import com.example.order_food.service.OrderService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryHolder> {
@@ -35,19 +41,31 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryHolder holder, int position) {
         if(!OrderHistory.isEmpty()){
-            holder.order_c_order_id.setText(OrderHistory.get(position).getId()+"");
+            int orderID = OrderHistory.get(position).getId();
+            holder.order_c_order_id.setText(String.valueOf(orderID));
             holder.order_c_order_date.setText(OrderHistory.get(position).getOrderDate());
             holder.order_c_order_shipped.setText(OrderHistory.get(position).getShippedDate());
             holder.order_c_order_total.setText(String.valueOf(OrderHistory.get(position).getTotal()));
             if(OrderHistory.get(position).getStatus().equals(StaticDefineForSystem.ORDER_PENDING)){
-
+                holder.order_c_order_complete.setVisibility(View.GONE);
+                holder.order_c_order_cancel.setVisibility(View.GONE);
             }
             if(OrderHistory.get(position).getStatus().equals(StaticDefineForSystem.ORDER_CANCEL)){
-
+                holder.order_c_order_change_status_cancel.setVisibility(View.GONE);
+                holder.order_c_order_change_status_complete.setVisibility(View.GONE);
+                holder.order_c_order_complete.setVisibility(View.GONE);
+                holder.order_c_order_pending.setVisibility(View.GONE);
             }
             if(OrderHistory.get(position).getStatus().equals(StaticDefineForSystem.ORDER_COMPLETE)){
-
+                holder.order_c_order_change_status_cancel.setVisibility(View.GONE);
+                holder.order_c_order_change_status_complete.setVisibility(View.GONE);
+                holder.order_c_order_cancel.setVisibility(View.GONE);
+                holder.order_c_order_pending.setVisibility(View.GONE);
             }
+            holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            List<PopularFoodCard> popularFoodCards = OrderService.getInstance(context).getListOfOrderDetailByOrderID(orderID);
+            OrderDetailAdapter adapter = new OrderDetailAdapter(popularFoodCards, orderID,context);
+            holder.recyclerView.setAdapter(adapter);
         }
     }
 
@@ -66,7 +84,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         TextView order_c_order_id;
         RecyclerView recyclerView;
 
-        Button order_c_order_change_status;
+        TextView order_c_order_change_status_cancel;
+        TextView order_c_order_change_status_complete;
+        @SuppressLint("NotifyDataSetChanged")
         public OrderHistoryHolder(@NonNull View itemView) {
             super(itemView);
             order_c_order_id = itemView.findViewById(R.id.food_order_history_id);
@@ -76,8 +96,32 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             order_c_order_pending = itemView.findViewById(R.id.food_order_status_PENDING);
             order_c_order_cancel = itemView.findViewById(R.id.food_order_status_Cancel);
             order_c_order_complete = itemView.findViewById(R.id.food_order_status_COMPLETE);
-            order_c_order_change_status = itemView.findViewById(R.id.food_order_history_cancel);
+            order_c_order_change_status_cancel = itemView.findViewById(R.id.food_order_history_cancel);
+            order_c_order_change_status_complete = itemView.findViewById(R.id.food_order_history_complete);
             recyclerView = itemView.findViewById(R.id.rec_order_history);
+
+            order_c_order_change_status_cancel.setOnClickListener(view -> {
+                OrderCard order= OrderHistory.get(getAdapterPosition());
+                boolean checkCreate = OrderService.getInstance(context).updateStatusOfStatus(order.getId(), StaticDefineForSystem.ORDER_CANCEL);
+                if(checkCreate){
+                    Toast.makeText(context, "Cancel order Fail, please try again", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(context, "Cancel order successfully", Toast.LENGTH_SHORT).show();
+                OrderHistory.get(getAdapterPosition()).setStatus(StaticDefineForSystem.ORDER_CANCEL);
+                notifyDataSetChanged();
+            });
+            order_c_order_change_status_complete.setOnClickListener(view -> {
+                OrderCard order= OrderHistory.get(getAdapterPosition());
+                boolean checkCreate = OrderService.getInstance(context).updateStatusOfStatus(order.getId(), StaticDefineForSystem.ORDER_COMPLETE);
+                if(checkCreate){
+                    Toast.makeText(context, "Complete order Fail, please try again", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(context, "Complete order successfully, thank you for order", Toast.LENGTH_SHORT).show();
+                OrderHistory.get(getAdapterPosition()).setStatus(StaticDefineForSystem.ORDER_COMPLETE);
+                notifyDataSetChanged();
+            });
         }
     }
 }

@@ -7,6 +7,7 @@ import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.Config.StaticDefineForSystem;
 import com.example.order_food.db.AppDatabase;
 import com.example.order_food.db.DAO.OrderDao;
+import com.example.order_food.db.entity.Food;
 import com.example.order_food.db.entity.Order;
 import com.example.order_food.db.entity.OrderDetail;
 
@@ -88,5 +89,50 @@ public class OrderService {
             ordersCards.add(orderCard);
         }
         return ordersCards;
+    }
+    public boolean updateStatusOfStatus(int orderID, String status){
+        Order order;
+        try {
+            order= appDatabase.orderDao().getOrderByOrderID(orderID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        order.setStatus(status);
+        try {
+            appDatabase.orderDao().updateOrder(order);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public List<PopularFoodCard> getListOfOrderDetailByOrderID (int orderID){
+        List<PopularFoodCard> popularFoodCards = new ArrayList<>();
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        try {
+            orderDetails= appDatabase.orderDetailDao().getOrderDetailByOrderID(orderID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return popularFoodCards;
+        }
+        PopularFoodCard popularFoodCard;
+        Food food;
+        for(OrderDetail orderDetail: orderDetails){
+            popularFoodCard = new PopularFoodCard();
+            try {
+                food= appDatabase.foodDao().getFoodById(orderDetail.getFoodId());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return popularFoodCards;
+            }
+            popularFoodCard.setFoodName(food.getFoodName());
+            popularFoodCard.setId(food.getId());
+            popularFoodCard.setFoodPrice(food.getFoodPrice());
+            popularFoodCard.setFoodImage(food.getImageUri());
+            popularFoodCard.setQuantity(orderDetail.getQuantity());
+            popularFoodCards.add(popularFoodCard);
+        }
+        return popularFoodCards;
     }
 }
