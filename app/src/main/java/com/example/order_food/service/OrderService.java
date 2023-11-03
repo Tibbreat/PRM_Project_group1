@@ -139,4 +139,8 @@ public class OrderService {
         }
         return popularFoodCards;
     }
+
+    public List<Order> getAllOrders () {
+        return appDatabase.orderDao().getAllOrders();
+    }
 }
