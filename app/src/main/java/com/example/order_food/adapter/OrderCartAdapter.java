@@ -27,7 +27,7 @@ public class OrderCartAdapter extends RecyclerView.Adapter<OrderCartAdapter.Orde
     }
     List<PopularFoodCard> orderCartCards;
     String userId;
-    private Context context;
+    private final Context context;
     private OnItemChangeListener listener;
 
     public OrderCartAdapter(List<PopularFoodCard> orderCart, String id, Context context){

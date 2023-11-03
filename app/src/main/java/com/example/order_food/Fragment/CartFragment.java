@@ -92,6 +92,11 @@ public class CartFragment extends Fragment implements OrderCartAdapter.OnItemCha
         textView.setText(total + "$");
 
         view.findViewById(R.id.btn_order_cart_order).setOnClickListener(view1 -> {
+            total = 0;
+            for (PopularFoodCard orderCartCard : orderCartCards) {
+                total = total + (orderCartCard.getFoodPrice() * orderCartCard.getQuantity());
+            }
+            Toast.makeText(requireContext(), "Order process with total "+total+"$", Toast.LENGTH_SHORT).show();
             boolean checkCreate = OrderService.getInstance(getContext()).insertOrder(total, userID, orderCartCards);
             if(orderCartCards.size()==0){
                 return;
