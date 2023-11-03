@@ -1,6 +1,8 @@
 package com.example.order_food.service;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.example.order_food.Card.OrderCard;
 import com.example.order_food.Card.PopularFoodCard;
@@ -10,10 +12,12 @@ import com.example.order_food.db.entity.Food;
 import com.example.order_food.db.entity.Order;
 import com.example.order_food.db.entity.OrderDetail;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class OrderService {
     private static OrderService instance;
@@ -89,24 +93,40 @@ public class OrderService {
         }
         return ordersCards;
     }
-    public boolean updateStatusOfStatus(int orderID, String status){
+    public boolean updateStatusOfStatus(int orderID, String status, Context context) {
         Order order;
         try {
             order= appDatabase.orderDao().getOrderByOrderID(orderID);
         } catch (Exception e) {
+            Toast.makeText(context, "Fail to find order", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return false;
         }
         order.setStatus(status);
+        Calendar calendar = Calendar.getInstance();
+        Date currentTime = calendar.getTime();
         if(status.equals(StaticDefineForSystem.ORDER_COMPLETE)){
-            Calendar calendar = Calendar.getInstance();
-            Date currentTime = calendar.getTime();
             order.setShippedDate(String.valueOf(currentTime));
+        }
+        if(status.equals(StaticDefineForSystem.ORDER_CANCEL)){
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy");
+            try {
+                Date orderDate= formatter.parse(order.getOrderDate());
+                long duration = currentTime.getTime()- Objects.requireNonNull(orderDate).getTime();
+                if(duration>( 10 * 60 * 1000 )){
+                    Toast.makeText(context, "You can only cancel order if the duration from the order moment to present is under 10 min", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
         }
         try {
             appDatabase.orderDao().updateOrder(order);
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(context, "Cancel order Fail, please try again", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
