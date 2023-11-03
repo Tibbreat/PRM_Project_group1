@@ -19,7 +19,7 @@ import com.example.order_food.db.entity.OrderDetail;
 import com.example.order_food.db.entity.User;
 import com.example.order_food.util.LocalDateConverter;
 
-@Database(entities = {User.class, Food.class, Order.class, OrderDetail.class, FavoriteFood.class}, version = 4)
+@Database(entities = {User.class, Food.class, Order.class, OrderDetail.class, FavoriteFood.class}, version = 5)
 @TypeConverters(LocalDateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;

@@ -22,4 +22,8 @@ public  interface OrderDao {
     int updateOrder(Order order);
     @Query("SELECT * FROM `Order` WHERE id= :id")
     Order getOrderByOrderID(int id);
+
+    @Query("SELECT * FROM `Order` ORDER BY CASE WHEN status = 'PENDING' THEN 0 WHEN status = 'COMPLETE' THEN 1 ELSE 2 END")
+    List<Order> getAllOrders();
+
 }
