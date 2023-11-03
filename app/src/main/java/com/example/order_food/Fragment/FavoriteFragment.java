@@ -1,36 +1,35 @@
 package com.example.order_food.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.R;
 import com.example.order_food.adapter.FavoriteCartAdapter;
-import com.example.order_food.adapter.PopularAdapter;
+import com.example.order_food.service.FoodService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class  FavoriteFragment extends Fragment {
-    private static final String ID = "ID";
-    private static final String ARG_PARAM2 = "param2";
-    private String userID;
-    private String mParam2;
+    SharedPreferences preferences;
+    String userID;
+    FragmentTransaction frag_tran;
     List<PopularFoodCard> foods = new ArrayList<>();
-    public static FavoriteFragment newInstance(String param1, String param2) {
+    public static FavoriteFragment newInstance() {
         FavoriteFragment fragment = new FavoriteFragment();
         Bundle args = new Bundle();
-        args.putString(ID, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,10 +37,9 @@ public class  FavoriteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            userID = getArguments().getString(ID);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        Log.d("favourite_fragment", "getInto onCreate favoriteFragment");
+        preferences = getActivity().getSharedPreferences("account", Context.MODE_PRIVATE);
+        userID = preferences.getString("id", "");
     }
 
     @Override
@@ -50,18 +48,19 @@ public class  FavoriteFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
 
-//        PopularFoodCard food1 = new PopularFoodCard(1,R.drawable.discoun1,"Food 1",12);
-//        PopularFoodCard food2 = new PopularFoodCard(1,R.drawable.discount,"Food 2",15);
-//        PopularFoodCard food3 = new PopularFoodCard(1,R.drawable.discount2,"Food 3",20);
-//
-//        foods.clear();
-//        foods.add(food1);
-//        foods.add(food2);
-//        foods.add(food3);
-
+        int id=-1;
+        try{
+            id = Integer.parseInt(userID);
+        }catch (Exception e) {
+            frag_tran = getParentFragmentManager().beginTransaction();
+            frag_tran.replace(R.id.fragmentContainerView, HomeFragment.newInstance(), "homeFragment");
+            frag_tran.commit();
+        }
+        foods = FoodService.getInstance(requireContext()).getFavoriteFood(id);
+        Log.d("favourite_fragment", "getInto onCreateView get list of fav: "+foods.size());
         RecyclerView recView = view.findViewById(R.id.rec_favorite_food);
         recView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recView.setAdapter(new FavoriteCartAdapter(foods, userID));
+        recView.setAdapter(new FavoriteCartAdapter(foods, String.valueOf(userID), getContext(), getParentFragmentManager()));
 
         return view;
     }

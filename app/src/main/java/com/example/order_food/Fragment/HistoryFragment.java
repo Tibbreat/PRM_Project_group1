@@ -1,14 +1,25 @@
 package com.example.order_food.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.order_food.Card.OrderCard;
 import com.example.order_food.R;
+import com.example.order_food.adapter.OrderHistoryAdapter;
+import com.example.order_food.service.OrderService;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,33 +28,19 @@ import com.example.order_food.R;
  */
 public class HistoryFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    SharedPreferences preferences;
+    String userID;
+    FragmentTransaction frag_tran;
+    List<OrderCard> orders;
 
     public HistoryFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HistoryFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static HistoryFragment newInstance(String param1, String param2) {
+    public static HistoryFragment newInstance() {
         HistoryFragment fragment = new HistoryFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +48,36 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        Log.d("history_fragment", "getInto onCreate history Fragment");
+        preferences = getActivity().getSharedPreferences("account", Context.MODE_PRIVATE);
+        userID = preferences.getString("id", "");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        Log.d("history_fragment", "getInto onCreateView history Fragment");
+        int id;
+        try{
+            id = Integer.parseInt(userID);
+        }catch (Exception e) {
+            frag_tran = getParentFragmentManager().beginTransaction();
+            frag_tran.replace(R.id.fragmentContainerView, HomeFragment.newInstance(), "homeFragment");
+            frag_tran.commit();
+            return view;
+        }
+        Log.d("history_fragment", "getInto onCreateView history Fragment, get id successfully");
+        orders = OrderService.getInstance(getContext()).getListOfOrder(id);
+        Log.d("history_fragment", "getInto onCreateView history Fragment, get order total "+orders.size());
+        try{
+            RecyclerView recView = view.findViewById(R.id.rec_order_history);
+            recView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            recView.setAdapter(new OrderHistoryAdapter(orders, getContext()));
+        }catch (Exception e){
+            Log.d("history_fragment", "getInto onCreateView history Fragment " + e.getMessage());
+        }
+        return view;
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.db.AppDatabase;
+import com.example.order_food.db.entity.FavoriteFood;
 import com.example.order_food.db.entity.Food;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.Objects;
 
 public class FoodService {
     private static FoodService instance;
-    private AppDatabase appDatabase;
+    private final AppDatabase appDatabase;
 
     private FoodService(Context context) {
         appDatabase = AppDatabase.getInstance(context);
@@ -79,6 +80,26 @@ public class FoodService {
             }
         }
         return ids;
+    }
+    public List<PopularFoodCard> getFavoriteFood(int userID){
+        List<PopularFoodCard> popularFoodCards = new ArrayList<>();
+        List<FavoriteFood> favoriteFoods = appDatabase.favoriteDao().getFavFoodByUserId(userID);
+        if(favoriteFoods.size()==0){
+            return popularFoodCards;
+        }
+        Food food;
+        PopularFoodCard card;
+        for(FavoriteFood favoriteFood: favoriteFoods){
+            food = appDatabase.foodDao().getFoodById(favoriteFood.getProductID());
+            card = new PopularFoodCard();
+            card.setFoodImage(food.getImageUri());
+            card.setId(food.getId());
+            card.setFoodName(food.getFoodName());
+            card.setFoodPrice(food.getFoodPrice());
+
+            popularFoodCards.add(card);
+        }
+        return popularFoodCards;
     }
 }
 

@@ -1,13 +1,6 @@
-package com.example.order_food.db.entity;
+package com.example.order_food.Card;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import java.io.Serializable;
-
-@Entity
-public class Order implements Serializable {
-    @PrimaryKey(autoGenerate = true)
+public class OrderCard {
     private int id;
     private String orderDate;
     private float total;
@@ -15,16 +8,15 @@ public class Order implements Serializable {
     private int userID;
     private String shippedDate;
 
-    public Order() {
+    public String getShippedDate() {
+        return shippedDate;
     }
 
-    public Order(int id, String orderDate, float total, String status, int userID, String shippedDate) {
-        this.id = id;
-        this.orderDate = orderDate;
-        this.total = total;
-        this.status = status;
-        this.userID = userID;
+    public void setShippedDate(String shippedDate) {
         this.shippedDate = shippedDate;
+    }
+
+    public OrderCard() {
     }
 
     public int getId() {
@@ -35,7 +27,7 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public String  getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
@@ -65,13 +57,5 @@ public class Order implements Serializable {
 
     public void setUserID(int userID) {
         this.userID = userID;
-    }
-
-    public String getShippedDate() {
-        return shippedDate;
-    }
-
-    public void setShippedDate(String shippedDate) {
-        this.shippedDate = shippedDate;
     }
 }

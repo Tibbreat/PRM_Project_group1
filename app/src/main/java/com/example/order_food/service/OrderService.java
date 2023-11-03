@@ -2,9 +2,11 @@ package com.example.order_food.service;
 
 import android.content.Context;
 
+import com.example.order_food.Card.OrderCard;
 import com.example.order_food.Card.PopularFoodCard;
 import com.example.order_food.Config.StaticDefineForSystem;
 import com.example.order_food.db.AppDatabase;
+import com.example.order_food.db.entity.Food;
 import com.example.order_food.db.entity.Order;
 import com.example.order_food.db.entity.OrderDetail;
 
@@ -39,7 +41,7 @@ public class OrderService {
         order.setTotal(total);
         order.setStatus(StaticDefineForSystem.ORDER_PENDING);
 
-        long newOrderId=-1;
+        long newOrderId;
         try {
             order.setUserID(Integer.parseInt(userID));
             newOrderId = appDatabase.orderDao().insert(order);
@@ -64,5 +66,77 @@ public class OrderService {
             return false;
         }
         return true;
+    }
+    public List<OrderCard> getListOfOrder(int userID){
+        List<OrderCard> ordersCards = new ArrayList<>();
+        List<Order>  orders;
+        try {
+            orders= appDatabase.orderDao().getOrderByUserID(userID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ordersCards;
+        }
+
+        OrderCard orderCard;
+        for(Order order: orders){
+            orderCard = new OrderCard();
+            orderCard.setId(order.getId());
+            orderCard.setOrderDate(order.getOrderDate());
+            orderCard.setStatus(order.getStatus());
+            orderCard.setTotal(order.getTotal());
+            orderCard.setShippedDate(order.getShippedDate());
+            ordersCards.add(orderCard);
+        }
+        return ordersCards;
+    }
+    public boolean updateStatusOfStatus(int orderID, String status){
+        Order order;
+        try {
+            order= appDatabase.orderDao().getOrderByOrderID(orderID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        order.setStatus(status);
+        if(status.equals(StaticDefineForSystem.ORDER_COMPLETE)){
+            Calendar calendar = Calendar.getInstance();
+            Date currentTime = calendar.getTime();
+            order.setShippedDate(String.valueOf(currentTime));
+        }
+        try {
+            appDatabase.orderDao().updateOrder(order);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public List<PopularFoodCard> getListOfOrderDetailByOrderID (int orderID){
+        List<PopularFoodCard> popularFoodCards = new ArrayList<>();
+        List<OrderDetail> orderDetails;
+        try {
+            orderDetails= appDatabase.orderDetailDao().getOrderDetailByOrderID(orderID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return popularFoodCards;
+        }
+        PopularFoodCard popularFoodCard;
+        Food food;
+        for(OrderDetail orderDetail: orderDetails){
+            popularFoodCard = new PopularFoodCard();
+            try {
+                food= appDatabase.foodDao().getFoodById(orderDetail.getFoodId());
+            } catch (Exception e) {
+                e.printStackTrace();
+                return popularFoodCards;
+            }
+            popularFoodCard.setFoodName(food.getFoodName());
+            popularFoodCard.setId(food.getId());
+            popularFoodCard.setFoodPrice(food.getFoodPrice());
+            popularFoodCard.setFoodImage(food.getImageUri());
+            popularFoodCard.setQuantity(orderDetail.getQuantity());
+            popularFoodCards.add(popularFoodCard);
+        }
+        return popularFoodCards;
     }
 }
