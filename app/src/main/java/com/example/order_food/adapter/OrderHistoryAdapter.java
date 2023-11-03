@@ -110,9 +110,8 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
             order_c_order_change_status_cancel.setOnClickListener(view -> {
                 OrderCard order = OrderHistory.get(getAdapterPosition());
-                boolean checkCreate = OrderService.getInstance(context).updateStatusOfStatus(order.getId(), StaticDefineForSystem.ORDER_CANCEL);
+                boolean checkCreate = OrderService.getInstance(context).updateStatusOfStatus(order.getId(), StaticDefineForSystem.ORDER_CANCEL, context);
                 if (!checkCreate) {
-                    Toast.makeText(context, "Cancel order Fail, please try again", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 OrderHistory.get(getAdapterPosition()).setStatus(StaticDefineForSystem.ORDER_CANCEL);
@@ -121,7 +120,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             });
             order_c_order_change_status_complete.setOnClickListener(view -> {
                 OrderCard order = OrderHistory.get(getAdapterPosition());
-                boolean checkCreate = OrderService.getInstance(context).updateStatusOfStatus(order.getId(), StaticDefineForSystem.ORDER_COMPLETE);
+                boolean checkCreate = OrderService.getInstance(context).updateStatusOfStatus(order.getId(), StaticDefineForSystem.ORDER_COMPLETE, context);
                 if (!checkCreate) {
                     Toast.makeText(context, "Complete order Fail, please try again", Toast.LENGTH_SHORT).show();
                     return;
