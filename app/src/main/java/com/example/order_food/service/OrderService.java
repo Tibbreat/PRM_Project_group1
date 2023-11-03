@@ -163,4 +163,6 @@ public class OrderService {
     public List<Order> getAllOrders () {
         return appDatabase.orderDao().getAllOrders();
     }
+
+    public Order getOrderByOrderId(int id){return appDatabase.orderDao().getOrderByOrderID(id);}
 }
