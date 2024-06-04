@@ -11,19 +11,19 @@
         android:id="@+id/login_btn"
         android:layout_width="91dp"
         android:layout_height="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/greenbuttongradient"
         android:fontFamily="sans-serif-black"
         android:text="login"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/textView6"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
 
     <EditText
         android:id="@+id/edt_regis_phone"
-        android:layout_width="325dp"
-        android:layout_height="57dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/inputfield"
         android:drawableLeft="@android:drawable/stat_sys_speakerphone"
@@ -53,8 +53,8 @@
 
     <EditText
         android:id="@+id/edt_regis_re_password"
-        android:layout_width="325dp"
-        android:layout_height="57dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/inputfield"
         android:drawableLeft="@android:drawable/ic_lock_idle_lock"
@@ -97,8 +97,8 @@
 
     <EditText
         android:id="@+id/edt_regis_address"
-        android:layout_width="325dp"
-        android:layout_height="57dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/inputfield"
         android:drawableLeft="@android:drawable/ic_dialog_map"
@@ -127,8 +127,8 @@
 
     <EditText
         android:id="@+id/edt_regis_name"
-        android:layout_width="329dp"
-        android:layout_height="48dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="48dp"
         android:background="@drawable/inputfield"
         android:drawableLeft="@android:drawable/ic_menu_my_calendar"
@@ -168,8 +168,8 @@
 
     <EditText
         android:id="@+id/edt_regis_email"
-        android:layout_width="325dp"
-        android:layout_height="57dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/inputfield"
         android:drawableLeft="@android:drawable/sym_action_email"
@@ -196,8 +196,8 @@
 
     <EditText
         android:id="@+id/edt_regis_password"
-        android:layout_width="325dp"
-        android:layout_height="57dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/inputfield"
         android:drawableLeft="@android:drawable/ic_lock_idle_lock"
@@ -213,8 +213,8 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/register_btn"
-        android:layout_width="122dp"
-        android:layout_height="30dp"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/greenbuttongradient"
         android:fontFamily="sans-serif-black"
@@ -228,11 +228,12 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Already have an account ?"
         android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="@+id/register_btn"
-        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="@+id/register_btn"
         app:layout_constraintTop_toBottomOf="@+id/register_btn" />
 

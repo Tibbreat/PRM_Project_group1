@@ -47,31 +47,31 @@
 
             <ImageButton
                 android:id="@+id/btn_account_edit"
-                android:layout_width="25dp"
-                android:layout_height="21dp"
-                android:layout_marginStart="300dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
                 android:background="?attr/selectableItemBackground"
                 android:contentDescription="Go to Account Edit"
                 android:src="@drawable/edit"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/account_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/account_name"
                 tools:ignore="MissingConstraints" />
 
             <ImageButton
                 android:id="@+id/btn_account_delete"
-                android:layout_width="25dp"
-                android:layout_height="21dp"
-                android:layout_marginStart="300dp"
-                android:layout_marginTop="96dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
                 android:background="?attr/selectableItemBackground"
                 android:contentDescription="Back to Account Management"
                 android:src="@drawable/delete"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/account_email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/account_email"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

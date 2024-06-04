@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Food Name"
-                android:textColor=  "@color/black"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/food_order_cart_image"
                 app:layout_constraintStart_toEndOf="@+id/food_order_cart_image"
                 app:layout_constraintTop_toTopOf="@+id/food_order_cart_image"
@@ -73,31 +73,27 @@
                 android:id="@+id/add_quantity"
                 android:layout_width="47dp"
                 android:layout_height="25dp"
-                android:layout_marginStart="124dp"
                 android:background="@drawable/greenbuttongradient"
                 android:gravity="center"
                 android:text="+"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.774" />
+                app:layout_constraintBottom_toBottomOf="@+id/minus_quantity"
+                app:layout_constraintTop_toTopOf="@+id/minus_quantity"
+                tools:layout_editor_absoluteX="190dp" />
 
             <TextView
                 android:id="@+id/minus_quantity"
                 android:layout_width="47dp"
                 android:layout_height="25dp"
-                android:layout_marginStart="16dp"
                 android:background="@drawable/redbuttongradient"
                 android:gravity="center"
                 android:text="-"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/add_quantity"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.79" />
+                app:layout_constraintTop_toBottomOf="@+id/food_order_cart_name"
+                tools:layout_editor_absoluteX="88dp" />
 
             <ImageView
                 android:id="@+id/food_order_cart_image"
@@ -115,12 +111,11 @@
                 android:id="@+id/food_order_cart_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:text="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/food_order_cart_image"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.808" />
+                app:layout_constraintBottom_toBottomOf="@+id/minus_quantity"
+                app:layout_constraintEnd_toStartOf="@+id/add_quantity"
+                app:layout_constraintStart_toEndOf="@+id/minus_quantity"
+                app:layout_constraintTop_toTopOf="@+id/minus_quantity" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

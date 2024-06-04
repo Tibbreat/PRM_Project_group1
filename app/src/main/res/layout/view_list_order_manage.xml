@@ -52,12 +52,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_view_detail"
-                android:layout_width="121dp"
+                android:layout_width="110dp"
                 android:layout_height="41dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/greenbuttongradient"
                 android:text="View Detail"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -66,22 +67,22 @@
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="156dp"
+                android:layout_marginTop="16dp"
                 android:text="Status:"
-                app:layout_constraintBottom_toBottomOf="@+id/button_view_detail"
-                app:layout_constraintEnd_toStartOf="@+id/button_view_detail"
-                app:layout_constraintTop_toTopOf="@+id/button_view_detail" />
+                app:layout_constraintStart_toStartOf="@+id/textView19"
+                app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
             <TextView
                 android:id="@+id/order_date_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="12dp"
                 android:text=""
                 android:textColor="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="@+id/textView16"
                 app:layout_constraintStart_toEndOf="@+id/textView16"
-                app:layout_constraintTop_toTopOf="@+id/textView16" />
+                app:layout_constraintTop_toTopOf="@+id/textView16"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/ship_date_value"
@@ -99,7 +100,7 @@
                 android:id="@+id/total_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="48dp"
                 android:text=""
                 android:textColor="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="@+id/textView19"
@@ -111,7 +112,7 @@
                 android:id="@+id/status_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="44dp"
                 android:text=""
                 android:textColor="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="@+id/textView20"
